@@ -1,0 +1,171 @@
+.bank-tips {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 30px;
+  background: #f1f1f1;
+  line-height: 30px;
+  font-size: 14px;
+  padding: 2px 15px;
+}
+
+
+.bank-card {
+  position: relative;
+  width: 420px;
+  height: 250px;
+  margin-bottom: 85px;
+  margin-right: 10px;
+  border-radius: 17px;
+  -webkit-box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.1);
+  -webkit-transition: all 1s;
+  transition: all 1s;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+}
+.bank-card .bank-front {
+  position: absolute;
+  background: var(--card-color);
+  border-radius: 17px;
+  padding: 50px;
+  width: 100%;
+  height: 100%;
+  transform: translateZ(1px);
+  -webkit-transform: translateZ(1px);
+  -webkit-transition: background 0.3s;
+  transition: background 0.3s;
+  z-index: 50;
+  background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), -webkit-linear-gradient(-245deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.2) 70%, rgba(255, 255, 255, 0) 90%);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.bank-card .bank-front .bank-type{
+  position: absolute;
+  width: 75px;
+  height: 45px;
+  top: 20px;
+  right: 20px;
+}
+.bank-card .bank-front .bank-type img {
+  width: 100%;
+  float: right;
+}
+.bank-card .bank-front .bank-card_number {
+  position: absolute;
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  top: 110px;
+  color: var(--text-color);
+  word-spacing: 3px;
+  -webkit-transition: color 0.5s;
+  transition: color 0.5s;
+}
+.bank-card .bank-front .bank-date {
+  position: absolute;
+  bottom: 40px;
+  right: 55px;
+  width: 90px;
+  height: 35px;
+  color: var(--text-color);
+  -webkit-transition: color 0.5s;
+  transition: color 0.5s;
+}
+.bank-card .bank-front .bank-date .bank-date_value{
+  font-size: 12px;
+  position: absolute;
+  margin-left: 22px;
+  margin-top: 12px;
+  color: var(--text-color);
+  font-weight: 500;
+  -webkit-transition: color 0.5s;
+  transition: color 0.5s;
+}
+.bank-card .bank-front .bank-date:after {
+  content: 'AY / YIL';
+  position: absolute;
+  display: block;
+  font-size: 7px;
+  margin-left: 20px;
+}
+.bank-card .bank-front .bank-date:before {
+  content: 'valid \a thru';
+  position: absolute;
+  display: block;
+  font-size: 8px;
+  white-space: pre;
+  margin-top: 8px;
+}
+.bank-card .bank-front .bank-fullname {
+  position: absolute;
+  font-size: 20px;
+  bottom: 40px;
+  color: var(--text-color);
+  -webkit-transition: color 0.5s;
+  transition: color 0.5s;
+}
+.bank-card .bank-back {
+  position: absolute;
+  width: 100%;
+  border-radius: 17px;
+  height: 100%;
+  background: var(--card-color);
+  -webkit-transform: rotateY(180deg);
+          transform: rotateY(180deg);
+}
+.bank-card .bank-back .bank-magnetic {
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.7);
+  margin-top: 25px;
+}
+.bank-card .bank-back .bank-bar {
+  position: absolute;
+  width: 80%;
+  height: 37px;
+  background: rgba(255, 255, 255, 0.7);
+  left: 10px;
+  margin-top: 100px;
+}
+.bank-card .bank-back .bank-seccode {
+  font-size: 13px;
+  color: var(--text-color);
+  font-weight: 500;
+  position: absolute;
+  top: 100px;
+  right: 40px;
+}
+.bank-card .bank-back .bank-chip {
+  bottom: 45px;
+  left: 10px;
+}
+.bank-card .bank-back .bank-disclaimer {
+  position: absolute;
+  width: 65%;
+  left: 80px;
+  color: #f1f1f1;
+  font-size: 8px;
+  bottom: 55px;
+}
+
+.bank-chip {
+  position: absolute;
+  width: 55px;
+  height: 40px;
+  background: #bbb;
+  border-radius: 7px;
+}
+.bank-chip:after {
+  content: '';
+  display: block;
+  width: 35px;
+  height: 25px;
+  border-radius: 4px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: #ddd;
+}
