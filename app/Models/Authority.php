@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class Authority extends Model
 {
     use HasFactory;
     protected $guarded = [];
@@ -13,12 +13,12 @@ class User extends Authenticatable
      * Tablo adı
      * @var string
      */
-    protected $table = 'user';
+    protected $table = 'authority';
     /**
      * Ayarlar tablosu birincil anahtarı
      * @var string
      */
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'authority_id';
     /**
      * Birincil anahtarın otomatik artıp artmayacağı
      * @var bool
