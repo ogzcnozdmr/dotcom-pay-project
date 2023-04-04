@@ -3,10 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class AuthorityPages extends Model
+class AuthorityPages extends BaseModel
 {
+    /*
+     * Constructor and settings
+     */
+    public function __construct(bool $autoVisible = false)
+    {
+        $this->autoVisible = $autoVisible;
+    }
     use HasFactory;
     protected $guarded = [];
     /**

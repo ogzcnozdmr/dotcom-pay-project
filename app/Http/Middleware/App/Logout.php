@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware\Site;
+namespace App\Http\Middleware\App;
 
 use Closure;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ class Logout
     public function handle(Request $request, Closure $next)
     {
         if (!request()->session()->has('users') || !request()->session()->get('users')['isLogged']) {
-            return redirect()->route('danger');
+            return redirect()->route('login.start');
         }
         return $next($request);
     }

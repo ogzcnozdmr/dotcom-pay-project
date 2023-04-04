@@ -28,7 +28,7 @@ class BankSeed extends Seeder
                 'min_installment_amount' => 6,
                 'plus_installment' => 2,
                 'virtual_pos_type' => 1,
-                'bank_image' => 'assets/images/banka/ak.png',
+                'bank_photo' => 'assets/images/banka/ak.png',
                 'bank_visible' => '1',
             ],
             [
@@ -46,7 +46,7 @@ class BankSeed extends Seeder
                 'min_installment_amount' => 6,
                 'plus_installment' => 2,
                 'virtual_pos_type' => 1,
-                'bank_image' => 'assets/images/banka/is.png',
+                'bank_photo' => 'assets/images/banka/is.png',
                 'bank_visible' => '1',
             ],
             [
@@ -64,7 +64,7 @@ class BankSeed extends Seeder
                 'min_installment_amount' => 6,
                 'plus_installment' => 2,
                 'virtual_pos_type' => 1,
-                'bank_image' => 'assets/images/banka/halk.png',
+                'bank_photo' => 'assets/images/banka/halk.png',
                 'bank_visible' => '1',
             ],
             [
@@ -82,7 +82,7 @@ class BankSeed extends Seeder
                 'min_installment_amount' => 6,
                 'plus_installment' => 2,
                 'virtual_pos_type' => 1,
-                'bank_image' => 'assets/images/banka/finans.png',
+                'bank_photo' => 'assets/images/banka/finans.png',
                 'bank_visible' => '1',
             ],
             [
@@ -100,7 +100,7 @@ class BankSeed extends Seeder
                 'min_installment_amount' => 6,
                 'plus_installment' => 2,
                 'virtual_pos_type' => 1,
-                'bank_image' => 'assets/images/banka/vakif.png',
+                'bank_photo' => 'assets/images/banka/vakif.png',
                 'bank_visible' => '1',
             ],
             [
@@ -118,7 +118,7 @@ class BankSeed extends Seeder
                 'min_installment_amount' => 6,
                 'plus_installment' => 2,
                 'virtual_pos_type' => 1,
-                'bank_image' => 'assets/images/banka/garanti.png',
+                'bank_photo' => 'assets/images/banka/garanti.png',
                 'bank_visible' => '1',
             ]
         ];

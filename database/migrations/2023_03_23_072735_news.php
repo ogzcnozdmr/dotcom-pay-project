@@ -16,7 +16,7 @@ return new class extends Migration
             $table->text('news_title');
             $table->text('news_seo');
             $table->text('news_content');
-            $table->text('news_image');
+            $table->text('news_photo');
             $table->dateTime('news_date')->useCurrent();
             $table->enum('news_visible', ['0', '1'])->default('1');
         });

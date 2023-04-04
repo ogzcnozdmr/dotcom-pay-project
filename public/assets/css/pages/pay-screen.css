@@ -1,0 +1,23 @@
+.hide{
+    display: none;
+}
+@media only screen and (max-width: 992px) {
+    .kartsistemi_ac {
+        display: none;
+    }
+    .kartsistemi_kapat {
+        display: block;
+    }
+}
+@media only screen and (min-width: 992px) {
+    .kartsistemi_ac {
+        display: block;
+    }
+    .kartsistemi_kapat {
+        display: none;
+    }
+}
+
+.table td,.table th {
+    text-align: center;
+}

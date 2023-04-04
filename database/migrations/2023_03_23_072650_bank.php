@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('min_installment_amount');
             $table->integer('plus_installment')->default(0);
             $table->integer('virtual_pos_type')->default(1);
-            $table->string('bank_image');
+            $table->string('bank_photo');
             $table->enum('bank_visible', ['0', '1'])->default('1');
         });
     }

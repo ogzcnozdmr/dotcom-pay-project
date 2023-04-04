@@ -5,8 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Installment extends Model
+class Installment extends BaseModel
 {
+    /*
+     * Constructor and settings
+     */
+    public function __construct(bool $autoVisible = true)
+    {
+        $this->autoVisible = $autoVisible;
+    }
     use HasFactory;
     protected $guarded = [];
     /**
@@ -29,4 +36,13 @@ class Installment extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    /**
+     * Kullanılabilir taksitleri getirir
+     * @return array
+     */
+    public function __data_available(string $areas = '*') {
+        $builder = self::where(['installment_visible' => '1'])->where('installment_number' , '>', '1');
+        return builder_return_data($builder, null, $areas);
+    }
 }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('notifications_content');
             $table->text('notifications_icon');
             $table->enum('notifications_result', ['0', '1'])->default('0');
-            $table->dateTime('notifications_data')->useCurrent();
+            $table->dateTime('notifications_date')->useCurrent();
             $table->enum('notifications_read', ['0', '1'])->default('0');
         });
     }

@@ -3,10 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class Notifications extends Model
+class Notifications extends BaseModel
 {
+    /*
+     * Constructor and settings
+     */
+    public function __construct(bool $autoVisible = false)
+    {
+        $this->autoVisible = $autoVisible;
+    }
     use HasFactory;
     protected $guarded = [];
     /**

@@ -3,10 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class Authority extends Model
+class Authority extends BaseModel
 {
+    /*
+     * Constructor and settings
+     */
+    public function __construct(bool $autoVisible = false)
+    {
+        $this->autoVisible = $autoVisible;
+    }
     use HasFactory;
     protected $guarded = [];
     /**
@@ -29,4 +35,13 @@ class Authority extends Model
      * @var bool
      */
     public $timestamps = false;
+    /**
+     * Yönetici hariç yetkileri getirir
+     * @return array
+     */
+    public function __data_seller() : array
+    {
+        $builder = self::where('authority_name', '!=', 'admin');
+        return builder_return_data($builder);
+    }
 }

@@ -1,5 +1,18 @@
-<?php //
+<?php
 
+use JetBrains\PhpStorm\NoReturn;
+
+/**
+ * Redirect route
+ * @param string $routeName
+ * @param string $extraValue
+ * @return void
+ */
+#[NoReturn] function __redirect(string $routeName, string $extraValue = '') : void
+{
+    header("Location: ".route($routeName).$extraValue);
+    die();
+}
 /**
  * Project json encode
  * @param object|array|null $json
@@ -9,7 +22,6 @@ function __json_encode(object|array|null $json) : string
 {
     return json_encode($json, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) ?: '';
 }
-
 /**
  * Project json decode
  * @param string|null $json
@@ -164,7 +176,7 @@ function mail_gonder($tarih,$tutar,$sonuc,$eposta){
     @$mail->Send();
 }
 
-function tarih_cevir($date,$type=0){ //date("Y-m-d H:i:S");
+function date_translate($date, $type = 0){
     $date_explode = explode(" ",$date);
     $year_explode = explode("-",$date_explode[0]);
     $hour_explode = explode(":",$date_explode[1]);
@@ -240,5 +252,21 @@ function sanitize($s){
     $s = trim($s, '-');
     $s = trim($s, ' ');
     return $s;
+}
+
+/**
+ * Ekrana yazdırır ve durdurur
+ * @param mixed $pire
+ * @param bool $die
+ * @return void
+ */
+function preprint(mixed $pire, bool $die = true) : void
+{
+    echo "<pre>";
+    print_r($pire);
+    echo "<pre>";
+    if ($die) {
+        die();
+    }
 }
 ?>

@@ -29,7 +29,7 @@ function builder_return_data(\Illuminate\Database\Eloquent\Builder|Illuminate\Da
 {
     if ($id === null) {
         if (get_class($builder) === 'Illuminate\Database\Query\Builder') {
-            return $builder->get(DB::raw($areas));
+            return $builder->get(DB::raw($areas))->toArray();
         } else {
             return $builder->get(DB::raw($areas))->toArray();
         }
@@ -37,7 +37,7 @@ function builder_return_data(\Illuminate\Database\Eloquent\Builder|Illuminate\Da
         $return = $builder->first(DB::raw($areas));
         if ($return !== null) {
             if (get_class($builder) === 'Illuminate\Database\Query\Builder') {
-                return (array) $return;
+                return $return;
             } else {
                 return $return->toArray();
             }

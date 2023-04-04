@@ -3,10 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class News extends Model
+class News extends BaseModel
 {
+    /*
+     * Constructor and settings
+     */
+    public function __construct(bool $autoVisible = true)
+    {
+        $this->autoVisible = $autoVisible;
+    }
     use HasFactory;
     protected $guarded = [];
     /**

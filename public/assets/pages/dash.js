@@ -44,12 +44,9 @@
 
 }(window.jQuery),
 
-//initializing 
-  function ($) {
-    $.post( "settings/process.php", { post: "Dashboard-area"},function(data){
-      //console.log(data);
+//initializing
+function ($) {
+    $.get( 'pay/dashboard', {}, function(data) {
       $.Dashboard.init(data);
-    },"json");
-
-    
+    }, 'json');
   }(window.jQuery);

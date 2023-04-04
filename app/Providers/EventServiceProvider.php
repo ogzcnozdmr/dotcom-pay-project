@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use Illuminate\Database\Events\StatementPrepared;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 
@@ -25,7 +26,12 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        /*
+         * PDO'dan dönen veriyi array haline getirir
+         */
+        Event::listen(StatementPrepared::class, function($event) {
+            $event->statement->setFetchMode(\PDO::FETCH_ASSOC);
+        });
     }
 
     /**
