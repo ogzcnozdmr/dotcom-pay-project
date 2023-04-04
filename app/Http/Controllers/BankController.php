@@ -11,9 +11,11 @@ class BankController extends Controller
 {
     /**
      * Bank start
+     * @param Request $request
+     * @param int $id
      * @return View
      */
-    public function start(Request $request): View
+    public function start(Request $request, int $id = 1): View
     {
         $this->startIllegal('bank-settings');
         if (session()->get('users')['authority'] !== "admin"){
@@ -21,7 +23,7 @@ class BankController extends Controller
         }
         $bank = new Bank();
         $bank_info = $bank->__data(null);
-        $bank_detail = $bank->__data($request->input('select') !== null ? $request->input('select') : 1);
+        $bank_detail = $bank->__data($id);
         if (empty($bank_detail)) {
             __redirect('danger');
         }
@@ -29,7 +31,7 @@ class BankController extends Controller
         $installment = new Installment();
         $installment_data = $installment->__data_available('installment_number');
         return view('bank', [
-            'select' => $request->input('select') ?? -1,
+            'select' => $id,
             'bank_info' => $bank_info,
             'bank_detail' => $bank_detail,
             'bank_detail_api' => $bank_detail_api,
@@ -51,34 +53,5 @@ class BankController extends Controller
             "min_installment_amount" => $request->input('min_installment_amount')
         ]);
         echo $update ? '1' : '0';
-    }
-    /**
-     * Bank plus installment
-     * @param Request $request
-     * @return void
-     */
-    public function plusInstallment(Request $request) {
-        $bank = new Bank();
-        $update = $bank->__update($request->input('id'), [
-            'plus_installment' => $request->input('installment')
-        ]);
-        echo $update ? '1' : '0';
-    }
-    /**
-     * Bank plus installment
-     * @param Request $request
-     * @return void
-     */
-    public function getInstallment(Request $request) {
-        $bank = new Bank();
-        $get = current($bank->__data(null, 'max_installment,min_installment_amount', [
-            'bank_variable' => $request->input('bank')
-        ]));
-        $array = [
-            "result" => !empty($get) ? '1' : '0',
-            "max"    => $get['max_installment'],
-            "min"    => $get['min_installment_amount']
-        ];
-        echo __json_encode($array);
     }
 }

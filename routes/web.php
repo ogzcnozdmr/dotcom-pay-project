@@ -61,10 +61,8 @@ Route::name('seller.')->group(function () {
  * Bank
  */
 Route::name('bank.')->group(function () {
-    Route::get('/bank', [\App\Http\Controllers\BankController::class, 'start'])->name('start');
+    Route::get('/bank/{id?}', [\App\Http\Controllers\BankController::class, 'start'])->name('start');
     Route::post('/bank/settings', [\App\Http\Controllers\BankController::class, 'settings'])->name('settings');
-    Route::post('/bank/plusInstallment', [\App\Http\Controllers\BankController::class, 'plusInstallment'])->name('plusInstallment');
-    Route::post('/bank/getInstallment', [\App\Http\Controllers\BankController::class, 'getInstallment'])->name('getInstallment');
 });
 
 /**
@@ -102,7 +100,7 @@ Route::name('news.')->group(function () {
  * Authority
  */
 Route::name('authority.')->group(function () {
-    Route::get('/authority', [\App\Http\Controllers\AuthorityController::class, 'start'])->name('start');
+    Route::get('/authority/{id?}', [\App\Http\Controllers\AuthorityController::class, 'start'])->name('start');
     Route::post('/authority/transactionConstraint', [\App\Http\Controllers\AuthorityController::class, 'transactionConstraint'])->name('transactionConstraint');
 });
 
@@ -110,5 +108,7 @@ Route::name('authority.')->group(function () {
  * Installment
  */
 Route::name('installment.')->group(function () {
-    Route::get('/installment', [\App\Http\Controllers\InstallmentController::class, 'start'])->name('start');
+    Route::get('/installment/{id?}', [\App\Http\Controllers\InstallmentController::class, 'start'])->name('start');
+    Route::post('/installment/set', [\App\Http\Controllers\InstallmentController::class, 'set'])->name('set');
+    Route::post('/installment/get', [\App\Http\Controllers\BankController::class, 'get'])->name('get');
 });

@@ -3,10 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Models\Authority;
+use App\Models\AuthorityPages;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class AuthorityController extends Controller
 {
+    /**
+     * İşlem kısıtı sayfası
+     * @param int $id
+     * @return View
+     */
+    public function start(int $id = 2) : View
+    {
+        $this->startIllegal('transaction-constraint');
+        if (session()->get('users')['authority'] !== 'admin') {
+            __redirect('danger');
+        }
+        $authority = new Authority();
+        $authority_pages = new AuthorityPages();
+        $authority_get = $authority->__data_seller();
+        $authority_pages_get = $authority_pages->__data_authority();
+        $authority_area_get = $authority->__data($id);
+        if (empty($authority_area_get)) {
+            __redirect('danger');
+        }
+        $yetki_alan_islem_json = __json_decode($authority_area_get['authority_area'],true);
+        return view('authority', [
+            'id' => $id,
+            'authority_get' => $authority_get,
+            'authority_pages_get' => $authority_pages_get,
+            'authority_area_get' => $authority_area_get
+        ]);
+    }
 
     /**
      * İşlem kısıtı ekleme

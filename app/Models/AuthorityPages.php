@@ -35,4 +35,13 @@ class AuthorityPages extends BaseModel
      * @var bool
      */
     public $timestamps = false;
+    /**
+     * Yönetici hariç yetkileri getirir
+     * @return array
+     */
+    public function __data_authority() : array
+    {
+        $builder = self::where('authority_pages_id', '!=', 1);
+        return builder_return_data($builder);
+    }
 }
