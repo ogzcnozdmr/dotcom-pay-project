@@ -80,7 +80,7 @@ $(document).ready(function(){
                 $(".odeme-yap").text(button_text+nokta);
             },200);
 
-            $.post("settings/process.php", values, function(data) {
+            $.post("/pay/request", values, function(data) {
                 clearInterval(loading);
                 $(".odeme-yap").text("Ödeme Yap");
 
