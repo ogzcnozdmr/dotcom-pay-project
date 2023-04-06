@@ -89,7 +89,7 @@
                             <div>
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="banka_aktif" data-parsley-multiple="groups"
-                                           data-parsley-mincheck="2" value="{{ $bank_detail['bank_id'] }}" name="input"{{ $bank_detail['bank_visible'] === 1 ? ' checked' : '' }}>
+                                           data-parsley-mincheck="2" value="{{ $bank_detail['bank_id'] }}" name="input"{{ $bank_detail['bank_visible'] === '1' ? ' checked' : '' }}>
                                     <label class="custom-control-label" for="banka_aktif">Bankanın aktiflik durumu</label>
                                 </div>
                             </div>

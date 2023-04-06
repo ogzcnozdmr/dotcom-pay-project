@@ -18,14 +18,14 @@ class InstallmentController extends Controller
     {
         $this->startIllegal('bank-settings');
         if (session()->get('users')['authority'] !== 'admin') {
-            __redirect('danger');
+            __redirect('home.danger');
         }
         $bank = new Bank(false);
         $installment = new Installment();
         $bank_all_get = $bank->__data(null);
         $selected_bank = $bank->__data($id);
         if (empty($selected_bank)) {
-            __redirect('danger');
+            __redirect('home.danger');
         }
         $installment_get = $installment->__data(null);
         return view('installment', [
@@ -61,7 +61,7 @@ class InstallmentController extends Controller
             'bank_variable' => $request->input('bank')
         ]));
         $array = [
-            "result" => !empty($get) ? '1' : '0',
+            "result" => !empty($get),
             "max"    => $get['max_installment'],
             "min"    => $get['min_installment_amount']
         ];

@@ -33,6 +33,26 @@ function __json_decode(string|null $json, bool $type = false) : array | object
     return json_decode($json, $type) ?: ($type ? [] : new \stdClass());
 }
 
+function __ip()
+{
+    $ip = 'UNKNOWN';
+
+    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    } else if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } else if (!empty($_SERVER['HTTP_X_FORWARDED'])) {
+        $ip = $_SERVER['HTTP_X_FORWARDED'];
+    } else if (!empty($_SERVER['HTTP_FORWARDED_FOR'])) {
+        $ip = $_SERVER['HTTP_FORWARDED_FOR'];
+    } else if (!empty($_SERVER['HTTP_FORWARDED'])) {
+        $ip = $_SERVER['HTTP_FORWARDED'];
+    } else if (!empty($_SERVER['REMOTE_ADDR'])) {
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    return $ip;
+}
+
 function file_insert($file,$path,$type){//files , full-half
     if($type == "full"){
         $record_place=get_full_url().$path."/";
@@ -109,28 +129,22 @@ function get_full_url(){
     //$link .= $_SERVER['REQUEST_URI'];//dosya uzantısını da getirir
     return $link;
 }
-function bildirim_gonder($baslik,$icerik,$sonuc){
-    global $db;
-    $insert = $db->prepare("INSERT INTO `bildirim` (bildirim_baslik,bildirim_icerik,bildirim_icon,bildirim_sonuc,bildirim_tarih)values(:v1,:v2,:v3,:v4,:v5)");
-    $insert->execute(array(
-        "v1"=>$baslik,
-        "v2"=>$icerik,
-        "v3"=>"mdi mdi-message-text-outline",
-        "v4"=>$sonuc,
-        "v5"=>date("Y-m-d H:i:s")
-    ));
+
+function __notification_send($baslik, $icerik, $sonuc) : void
+{
+    $notification = new \App\Models\Notifications();
+    $notification->__insert([
+        'notifications_title' => $baslik,
+        'notifications_content' => $icerik,
+        'notifications_icon' => "mdi mdi-message-text-outline",
+        'notifications_result' => $sonuc
+    ]);
 }
 
-function mail_gonder($tarih,$tutar,$sonuc,$eposta){
-    include '../library/phpmailer/class.phpmailer.php';
-
-    //if($sonuc==1) $konu = "başarı ile sonuçlandırıldı, bizi seçtiğiniz için teşekkürler...";
-    //else $konu = "başarılı olamadı lütfen tekrar deneyiniz..";
-    if($sonuc=="basarili") $konu = "İşlem başarılı.";
-    else $konu = "Başarısız işlem!";
-    //VGCOahgAbc
-    //info@eraslan.com.tr
-    $mail = new PHPMailer();
+function __mail_send($tarih, $tutar, $sonuc, $eposta) {
+    $konu = $sonuc === 'basarili' ? 'İşlem başarılı.' : 'Başarısız işlem!';
+    $mail = new PHPMailer\PHPMailer\PHPMailer();
+    //use PHPMailer\PHPMailer\Exception;
     $mail->IsSMTP();
     $mail->SMTPAuth = true;
     $mail->Host = 'ni-maria.guzelhosting.com';//rd-sansa.guzelhosting.com
@@ -139,7 +153,7 @@ function mail_gonder($tarih,$tutar,$sonuc,$eposta){
     $mail->Username = 'odeme@eraslan.com.tr';//info@eraslan.com.tr
     //$mail->From = $mail->Username;
     $mail->Password = 'Noktacom*123';//VGCOahgAbc
-    $mail->SetFrom($mail->Username, 'Ödeme | Eraslanlar');
+    $mail->SetFrom($mail->Username, 'Ödeme | DotcomSoft');
     //$mail->AddAddress($eposta);
 
     $mail->AddBCC($eposta);
@@ -147,20 +161,18 @@ function mail_gonder($tarih,$tutar,$sonuc,$eposta){
     $mail->AddBCC("bilgi@noktacommedya.com");
 
     $mail->CharSet = 'UTF-8';
-
-    $header = "Eraslanlar ödeme işlemi";
+    $header = "ödeme işlemi";
 
     //$content		 =	"<b>Eraslanlar ödeme işlemi : </b> $tarih tarihinde yapılan $tutar tutarındaki ödeme işlemi $konu <hr />";
     //$content		.=	"<span style='font-size:10px;color:#bbbbbb;'>Bu mesaj ". date('H:i:s d.m.Y') ." tarihinde gönderildi.</span>";
-
     $content = "<b>Eraslanlar ödeme işlemi </b><hr>";
     $content .="<b>Tutar : </b>".$tutar." TL<br>";
     $content .="<b>Tarih : </b>".$tarih."<br>";
     $content .="<b>Sonuç : </b>".$konu."<br>";
     $content .=	"<span style='font-size:10px;color:#bbbbbb;'>Bu mesaj ". date('Y-m-d H:i:s') ." tarihinde gönderildi.</span>";
 
-    $mail->FromName = "Ödeme | Eraslanlar";
-    $mail->Subject  = "Eraslanlar ödeme işlemi";
+    $mail->FromName = "Ödeme | DotcomSoft";
+    $mail->Subject  = "Ödeme işlemi";
     $mail->Body = $content;
     $mail->AltBody = $content;
 
@@ -221,18 +233,18 @@ function date_translate($date, $type = 0){
             $month = "";
     }
     $year_explode[2] = ltrim($year_explode[2],"0");
-    if($type==0){
+    if ($type == 0) {
         return $year_explode[2]." ".$month; //12 aralık
-    }else if($type==1){
+    } else if($type == 1) {
         return $year_explode[2]." ".$month." ".$hour_explode[0].":".$hour_explode[1]; //12 aralık 13:20
-    }else if($type==2){
+    } else if($type == 2) {
         return $year_explode[2]." ".$month." ".$year_explode[0]." ".$hour_explode[0].":".$hour_explode[1];//12 aralık 2019 13:20
-    }else if($type==3){
+    } else if($type==3) {
         return $year_explode[2]." ".$month." ".$year_explode[0]; //13 aralık 2019
     }
 }
 
-function sanitize($s){
+function sanitize($s) {
     $find = array('Ç', 'Ş', 'Ğ', 'Ü', 'İ', 'Ö', 'ç', 'ş', 'ğ', 'ü', 'ö', 'ı', '+', '#');
     $replace = array('c', 's', 'g', 'u', 'i', 'o', 'c', 's', 'g', 'u', 'o', 'i', 'plus', 'sharp');
     $s = strtolower(str_replace($find, $replace, $s));

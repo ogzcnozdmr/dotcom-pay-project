@@ -13,7 +13,7 @@
             ]
         ]
     ])
-
+    <input type="hidden" id="min_installment_count" data-value="{{ $bank[0]['min_installment_amount'] }}">
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -46,7 +46,6 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-lg-6">
             <div class="card m-b-30">
@@ -55,7 +54,6 @@
                         <h4 class="mt-0 header-title">Satış Bilgileri</h4>
                         <p class="sub-title">Satış bilgilerinizi giriniz.</p>
                     </div>
-
                     <form id="sanal-satis-bilgileri">
                         <div class="form-group">
                             <label>Kredi Kartınızı Seçiniz</label>
@@ -82,7 +80,6 @@
                     </form>
                 </div>
             </div>
-
             <div class="card m-b-30">
                 <div class="card-body">
                     <h4 class="mt-0 header-title">Kart Bilgileri</h4>
@@ -123,7 +120,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
@@ -142,7 +138,6 @@
                             <label>Email Adresi</label>
                             <input type="text" name="musteri_email" class="form-control" {{ session()->get('users')['authority'] !=="admin" ? 'readonly' : 'required' }} placeholder="Email Adresi" value="{{ session()->get('users')['authority'] !=="admin" ? $login_get['user_email'] : '' }}"/>
                         </div>
-
                         <div class="form-group kartsistemi_kapat">
                             <div>
                                 <button type="button" class="btn btn-primary waves-effect waves-light odeme-yap">
@@ -159,10 +154,8 @@
                     </form>
                 </div>
             </div>
-
             <div class="card kartsistemi_ac" style="margin-top:34px;">
                 <div class="card-body">
-
                     <div class="bank-card" style="margin-top:60px;">
                         <div class="bank-front">
                             <div class="bank-type">
@@ -180,13 +173,11 @@
                             <span class="bank-chip"></span><span class="bank-disclaimer">Banka bilgileri</span>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 @endsection
-
 
 @section('css')
     <link href="{{ asset('assets/css/bank-card.css') }}" rel="stylesheet" type="text/css">
@@ -195,4 +186,5 @@
 
 @section('js')
     <script src="{{ asset('assets/js/bank-card.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/pay-screen.js') }}"></script>
 @endsection

@@ -49,8 +49,8 @@ Route::name('notification.')->group(function () {
 Route::name('seller.')->group(function () {
     Route::get('/seller', [\App\Http\Controllers\SellerController::class, 'start'])->name('start');
     Route::get('/seller/add', [\App\Http\Controllers\SellerController::class, 'add'])->name('add');
-    Route::get('/seller/update', [\App\Http\Controllers\SellerController::class, 'update'])->name('update');
-    Route::get('/seller/pay', [\App\Http\Controllers\SellerController::class, 'pay'])->name('pay');
+    Route::get('/seller/update/{id}', [\App\Http\Controllers\SellerController::class, 'update'])->name('update');
+    Route::get('/seller/pay/{id}', [\App\Http\Controllers\SellerController::class, 'pay'])->name('pay');
     Route::post('/seller/post/add', [\App\Http\Controllers\SellerController::class, 'postAdd'])->name('post.add');
     Route::post('/seller/post/update', [\App\Http\Controllers\SellerController::class, 'postUpdate'])->name('post.update');
     Route::post('/seller/post/list', [\App\Http\Controllers\SellerController::class, 'postList'])->name('post.list');

@@ -41,7 +41,7 @@ class Pay extends BaseModel
             ->join('bank', 'bank.bank_variable', '=', 'pay.pay_bank')
             ->where($where)
             ->orderBy('pay_id', 'desc');
-        return builder_return_data($builder, null, 'user_id,seller_name,pay_card_owner,order_total,pay_date,order_installment,pay_result,bank_name');
+        return builder_return_data($builder, null, 'pay_id,user_id,seller_name,pay_card_owner,order_total,pay_date,order_installment,pay_result,bank_name');
     }
 
     public static function __pay_success ($date1, $date2) {

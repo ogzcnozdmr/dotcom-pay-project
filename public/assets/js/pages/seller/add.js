@@ -2,39 +2,38 @@ $(document).ready(function(){
     $('#ekle').click(function(event){
         let tihis = $(this);
         element_status(tihis,false);
-
         let form = $("#bayi-ekle-form");
-        if(form_required_control("bayi-ekle-form")){//zorunlu alanlar doldurulduysa
+        if (form_required_control("bayi-ekle-form")) {//zorunlu alanlar doldurulduysa
             let email = form.find("input[name=email]").val();
-            if(email_type_control(email)){//email doğru
-                //info(true,"Email doğru");
-                let ksifre = form.find("input[name=ksifre]").val();
-                let ksifre2 = form.find("input[name=ksifre2]").val();
-
-                if(ksifre.length<8 || ksifre2.length<8){//şifre 8 karakterden küçükse
+            if (email_type_control(email)) {//email doğru
+                let password = form.find("input[name=password]").val();
+                let password2 = form.find("input[name=password2]").val();
+                /*
+                 * Şifre 8 karakterden küçükse
+                 */
+                if (password.length < 8 || password2.length < 8) {
                     element_status(tihis,true);
                     info(false,"Şifreniz 8 karakterden küçük olamaz");
-                }else{//şifre 8 karakterden büyükse
-                    let values={
-                        name:form.find("input[name=ad]").val(),
-                        email:email,
-                        username:form.find("input[name=kad]").val(),
-                        phone:form.find("input[name=tel]").val(),
-                        ksifre:ksifre,
-                        ksifre2:ksifre2,
+                } else {
+                    let values = {
+                        name:form.find("input[name=name]").val(),
+                        email,
+                        username:form.find("input[name=username]").val(),
+                        phone:form.find("input[name=phone]").val(),
+                        password,
+                        password2,
                         authority:form.find("select option:selected").val(),
                         authority_seller:$("form").find("input[type=checkbox]:checked").length
                     }
-                    console.log(values);
-                    $.post("settings/process.php",values,function(data){
-                        console.log(data);
-                        if(data.result===0){
+                    $.post("/seller/post/add", values, function(result) {
+                        console.log(result);
+                        if (!result.result) {
                             element_status(tihis,true);
-                            info(false,data.message);
-                        }else if(data.result===1){
-                            info(true,data.message);
+                            info(false, result.message);
+                        } else {
+                            info(true, result.message);
                             setTimeout(function(){
-                                $(location).attr('href','/seller/list')
+                                $(location).attr('href','/seller')
                             }, 2000);
                         }
                     }, 'json');

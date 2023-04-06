@@ -18,7 +18,7 @@ class AuthorityController extends Controller
     {
         $this->startIllegal('transaction-constraint');
         if (session()->get('users')['authority'] !== 'admin') {
-            __redirect('danger');
+            __redirect('home.danger');
         }
         $authority = new Authority();
         $authority_pages = new AuthorityPages();
@@ -26,7 +26,7 @@ class AuthorityController extends Controller
         $authority_pages_get = $authority_pages->__data_authority();
         $authority_area_get = $authority->__data($id);
         if (empty($authority_area_get)) {
-            __redirect('danger');
+            __redirect('home.danger');
         }
         $yetki_alan_islem_json = __json_decode($authority_area_get['authority_area'],true);
         return view('authority', [

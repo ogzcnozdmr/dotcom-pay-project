@@ -19,13 +19,13 @@ class BankController extends Controller
     {
         $this->startIllegal('bank-settings');
         if (session()->get('users')['authority'] !== "admin"){
-            __redirect('danger');
+            __redirect('home.danger');
         }
-        $bank = new Bank();
+        $bank = new Bank(false);
         $bank_info = $bank->__data(null);
         $bank_detail = $bank->__data($id);
         if (empty($bank_detail)) {
-            __redirect('danger');
+            __redirect('home.danger');
         }
         $bank_detail_api = __json_decode($bank_detail['bank_json'], true);
         $installment = new Installment();
@@ -42,7 +42,7 @@ class BankController extends Controller
     public function settings(Request $request) {
         $bank = new Bank();
         $update = $bank->__update($request->input('id'), [
-            "bank_visible" => $request->input('visible'),
+            "bank_visible" => $request->input('option') ? '1' : '0',
             "bank_json" =>__json_encode([
                 "name"          => $request->input('name'),
                 "password"      => $request->input('password'),
@@ -50,7 +50,7 @@ class BankController extends Controller
                 "user_prov_id"  => $request->input('user_prov_id')
             ]),
             "max_installment"        => $request->input('max_installment'),
-            "min_installment_amount" => $request->input('min_installment_amount')
+            "min_installment_amount" => $request->input('min_installment_count')
         ]);
         echo $update ? '1' : '0';
     }

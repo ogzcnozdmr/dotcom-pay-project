@@ -22,7 +22,7 @@
                     <form id="bayi-ekle-form">
                         <div class="form-group">
                             <label>Bayi Adı</label>
-                            <input type="text" name="ad" class="form-control" required placeholder="Bayi Adı"/>
+                            <input type="text" name="name" class="form-control" required placeholder="Bayi Adı"/>
                         </div>
                         <div class="form-group">
                             <label>E-mail Adresi</label>
@@ -30,16 +30,16 @@
                         </div>
                         <div class="form-group">
                             <label>Telefon Numarası</label>
-                            <input type="number" name="tel" class="form-control" required placeholder="Telefon Numarası"/>
+                            <input type="number" name="phone" class="form-control" required placeholder="Telefon Numarası"/>
                         </div>
                         <div class="form-group">
                             <label>Kullanıcı Adı</label>
-                            <input type="text" name="kad" class="form-control" required placeholder="Kullanıcı Adı"/>
+                            <input type="text" name="username" class="form-control" required placeholder="Kullanıcı Adı"/>
                         </div>
                         <div class="form-group">
                             <label>Kullanıcı Şifresi</label>
-                            <input type="password" name="ksifre" class="form-control" required placeholder="Kullanıcı Şifresi"/>
-                            <input type="password" name="ksifre2" class="form-control m-t-10" required placeholder="Kullanıcı Şifresi Tekrar"/>
+                            <input type="password" name="password" class="form-control" required placeholder="Kullanıcı Şifresi"/>
+                            <input type="password" name="password2" class="form-control m-t-10" required placeholder="Kullanıcı Şifresi Tekrar"/>
                         </div>
                         <div class="form-group">
                             <label>Yetki</label>
@@ -53,9 +53,9 @@
                             <label>Yetkili Bayi</label>
                             <div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="yetkili_bayi" data-parsley-multiple="groups"
+                                    <input type="checkbox" class="custom-control-input" id="official_distributor" data-parsley-multiple="groups"
                                            data-parsley-mincheck="2" name="input">
-                                    <label class="custom-control-label" for="yetkili_bayi">Bayi yetki durumu</label>
+                                    <label class="custom-control-label" for="official_distributor">Bayi yetki durumu</label>
                                 </div>
                             </div>
                         </div>

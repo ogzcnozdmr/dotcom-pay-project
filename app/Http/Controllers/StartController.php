@@ -33,4 +33,12 @@ class StartController extends Controller
             'successful_payment' => $successful_payment_total_and_count['success'] === 0 ? 0 : ceil($successful_payment_total_and_count['success'] * 100 / $payment_request_count)
         ]);
     }
+    /**
+     * Danger function
+     * @return View
+     */
+    public function danger () : View
+    {
+        return view('danger');
+    }
 }

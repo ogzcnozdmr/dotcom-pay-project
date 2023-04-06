@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Authority;
+use App\Models\Pay;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -22,7 +23,7 @@ class SellerController extends Controller
         ]);
     }
     /**
-     * Bayi listeleme sayfası
+     * Bayi ekleme
      * @return View
      */
     public function add() : View
@@ -34,23 +35,48 @@ class SellerController extends Controller
         ]);
     }
     /**
-     * Bayi listeleme sayfası
+     * Bayi listeleme
      * @return View
      */
-    public function update() : View
+    public function update(int $id) : View
     {
-        return view('seller-update');
+        $this->startIllegal('seller-list');
+        $user = new User();
+        $user_get = $user->__data($id);
+        if (empty($seller)) {
+            __redirect('home.danger');
+        }
+        return view('seller-update', [
+            'user_get' => $user_get
+        ]);
+    }
+    /**
+     * Bayi ödeme listesi
+     * @return View
+     */
+    public function pay(int $id) : View
+    {
+        $this->startIllegal('seller-list');
+        $pay = new Pay();
+        $user = new User();
+        $user_get = $user->__data($id);
+        if (empty($user_get)) {
+            __redirect('home.danger');
+        }
+        return view('seller-pay', [
+            'pay_list' => $pay->payList('seller', $id)
+        ]);
     }
     /**
      * Bayi oluşturur
-     * @param $request
+     * @param Request $request
      * @return void
      */
-    public function postAdd($request) : void
+    public function postAdd(Request $request) : void
     {
-        $user = new User(['autoVisible' => false]);
+        $user = new User(false);
         $getUser = current($user->__data(null, 'user_username', ['user_username' => $request->input('username')]));
-        if (!empty($getUser)) {
+        if (empty($getUser)) {
             $result = $user->__create([
                 "user_name" => $request->input('name'),
                 "user_username" => $request->input('username'),
@@ -58,7 +84,7 @@ class SellerController extends Controller
                 "user_phone" => $request->input('phone'),
                 "user_password" => password_hash(md5($request->input('password')), PASSWORD_BCRYPT, ["cost" => 12]),
                 "user_authority" => $request->input('authority'),
-                "official_distributor" => $request->input('official_distributor')
+                "official_distributor" => $request->input('authority_seller')
             ]);
             $this->result['result'] = $result;
             $this->result['message'] = $result ? 'Kayıt Başarılı' : 'Kayıt Başarısız';
@@ -120,15 +146,16 @@ class SellerController extends Controller
 
     /**
      * Bayiyi siler
-     * @param $request
+     * @param Request $request
      * @return void
      */
-    public function postRemove ($request) {
+    public function postRemove (Request $request) {
         $user = new User();
         $remove = $user->__update($request->input('id'), ['user_visible' => '0']);
         if ($remove) {
             $this->result['result'] = '1';
             $this->result['message'] = 'Başarıyla silindi';
+            $this->result['id'] = $request->input('id');
         }
         echo __json_encode($this->result);
     }
