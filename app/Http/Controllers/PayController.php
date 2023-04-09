@@ -91,7 +91,8 @@ class PayController extends Controller
      * Ödeme listesini getirir
      * @return void
      */
-    public function postList() : void {
+    public function postList() : void
+    {
         $result =[];
         $row = 0;
 
@@ -163,10 +164,14 @@ class PayController extends Controller
         }
         echo __json_encode($array);
     }
-
+    /**
+     * Ödeme requesti
+     * @param Request $request
+     * @return void
+     */
     public function payRequest(Request $request) {
         $bank = new Bank();
-        $this->pv['bank_selected'] = $_POST['satis']['banka'];
+        $this->pv['bank_selected'] = $request->input('satis')['banka'];
         $this->pv['bank_selected_arr'] = current($bank->__data(null, '*', ['bank_variable' => $this->pv['bank_selected']]));
         /*
          * Banka bulunamadıysa
@@ -179,134 +184,51 @@ class PayController extends Controller
         }
         $this->pv['bank_json'] = __json_decode($this->pv['bank_selected_arr']['bank_json'], true);
 
-        /*$this->pv['bank_json']['name'] = $this->pv['bank_json']['name'];
-        $this->pv['bank_json']['password'] = $this->pv['bank_json']['password'];
-        $this->pv['bank_json']['client_id'] = $this->pv['bank_json']['client_id'];
-        $this->pv['bank_json']['user_prov_id'] = $this->pv['bank_json']['user_prov_id'];*/
-
-        /*$this->pv['bank_selected_arr']['api_url'] = $this->pv['bank_selected_arr']['api_url'];
-        $this->pv['bank_selected_arr']['virtual_pos_type'] = $this->pv['bank_selected_arr']['virtual_pos_type'];*/
-
         //GENEL TARAF
         $this->pv['general']['address_ip'] = __ip();
-        $this->pv['general']['address_email'] = $_POST['musteri']['email'];
+        $this->pv['general']['address_email'] = $request->input('musteri')['email'];
         $this->pv['general']['numara_siparis'] = date("dmYHi") . "00" . rand(10000, 99999);
         $this->pv['general']['numara_user'] = '';
 
         //KART TARAFI
-        $this->pv['card']['kart_numara'] = str_replace(" ", "", trim($_POST['kart']['numara']));
-        $this->pv['card']['kart_son_kullanma_tarih'] = str_replace(" ", "", trim($_POST['kart']['son_kullanma']));
-        $this->pv['card']['kart_cvc'] = str_replace(" ", "", trim($_POST['kart']['cvc']));
+        $this->pv['card']['kart_numara'] = str_replace(" ", "", trim($request->input('kart')['numara']));
+        $this->pv['card']['kart_son_kullanma_tarih'] = str_replace(" ", "", trim($request->input('kart')['son_kullanma']));
+        $this->pv['card']['kart_cvc'] = str_replace(" ", "", trim($request->input('kart')['cvc']));
 
         //SATIS TARAFI
-        $this->pv['pay']['amount'] = str_replace(",", ".", (string) $_POST['satis']['tutar']);
-        $this->pv['pay']['installment'] = !is_numeric($_POST['satis']['taksit']) || (int) $_POST['satis']['taksit'] < 2 ? '' : ((int) $_POST['satis']['taksit']);
+        $this->pv['pay']['amount'] = str_replace(",", ".", (string) $request->input('satis')['tutar']);
+        $this->pv['pay']['installment'] = !is_numeric($request->input('satis')['taksit']) || (int) $request->input('satis')['taksit'] < 2 ? '' : ((int) $request->input('satis')['taksit']);
 
         //GONDEREN TARAFI
-        $this->pv['sender']['gonderen_isim'] = $_POST['kart']['ad_soyad'];
-        $this->pv['sender']['gonderen_firma'] = $_POST['musteri']['ad_soyad'];
+        $this->pv['sender']['gonderen_isim'] = $request->input('kart')['ad_soyad'];
+        $this->pv['sender']['gonderen_firma'] = $request->input('musteri')['ad_soyad'];
         $this->pv['sender']['gonderen_adres'] = '';
         $this->pv['sender']['gonderen_sehir'] = '';
         $this->pv['sender']['gonderen_posta_kod'] = '';
-        $this->pv['sender']['gonderen_telefon'] = $_POST['musteri']['tel'];
+        $this->pv['sender']['gonderen_telefon'] = $request->input('musteri')['tel'];
 
         //ALICI TARAFI
         $this->pv['buyer']['alici_isim'] = '';
         $this->pv['buyer']['alici_adres'] = '';
         $this->pv['buyer']['alici_sehir'] = '';
         $this->pv['buyer']['alici_posta_kod'] = '';
-
-        $sanalpos_xml = "";
+        $sanalpos_xml = '';
         //ÖDEMEYİ APİYE YOLLAYACAK DEĞERLER AYARLANIYOR
-        $sanalpos_xml = $this->odeme_deger_ayarla($sanalpos_xml);
-
+        $sanalpos_xml = $this->pay_variable_set($sanalpos_xml);
         //ÖDEME APİYE GÖNDERİLİYOR VE XML SONUCU DÖNÜYOR
-        $odeme_sonuc_xml = $this->odeme_gonder($sanalpos_xml);
-
+        $odeme_sonuc_xml = $this->pay_send($sanalpos_xml);
         //DÖNEN XML SONUCUNUN DEĞERLENDİRİLİP EKRANA YAZILMASI
-        $result_json = $this->xml_sonuc($odeme_sonuc_xml);
-
+        $result_json = $this->xml_result($odeme_sonuc_xml);
         echo __json_encode($result_json);
     }
-
-    private function xml_sonuc($odeme_sonuc_xml)
-    {
-        $response = 0;
-        $error = '';
-        $xml = simplexml_load_string($odeme_sonuc_xml);
-
-        if ($this->pv['bank_selected_arr']['virtual_pos_type'] == 1) {
-            $response = $xml->Response == "Approved" ? 1 : 0;
-            $error = isset($xml->ErrMsg) ? (string) $xml->ErrMsg : '';
-        } else if ($this->pv['bank_selected_arr']['virtual_pos_type'] == 2) {
-            $response = $xml->ResultCode == "0000" ? 1 : 0;
-            $error = isset($xml->ResultDetail) ? (string) $xml->ResultDetail : '';
-        } else if ($this->pv['bank_selected_arr']['virtual_pos_type'] == 3) {
-            $response = $xml->Transaction->Response->Message == "Approved" ? 1 : 0;
-            $error = isset($xml->Transaction->Response->ErrorMsg) ? (string) $xml->Transaction->Response->ErrorMsg : '';
-        }
-        $pay_date = date('Y-m-d H:i:s');
-        /*
-         * Veri tabanına kaydeder
-         */
-        $pay = new Pay();
-        $pay->__create([
-            'user_id' => session()->get('users')['authority'] === 'admin' ? 0 : session()->get('users')['id'],
-            'seller_name' => $this->pv['sender']['gonderen_firma'],
-            'order_number' => $this->pv['general']['numara_siparis'],
-            'order_ip' => $this->pv['general']['address_ip'],
-            'order_total' => $this->pv['pay']['amount'],
-            'order_installment' => $this->pv['pay']['installment'],
-            'pay_bank' => $this->pv['bank_selected'],
-            'pay_json' => __json_encode($xml, true),
-            'pay_date' => $pay_date,
-            'pay_result' => $response == 1 ? '1' : '0',
-            'pay_message' => $error,
-            'pay_card_owner' => $this->pv['sender']['gonderen_isim'],
-            'user_phone' => $this->pv['sender']['gonderen_telefon'],
-            'user_email' => $this->pv['general']['address_email'],
-        ]);
-        /*
-         * Mail gönderir
-         */
-        __mail_send(date_translate($pay_date, 2), $this->pv['pay']['amount'], ($response == 1 ? 'basarili' : 'basarisiz'), $this->pv['general']['address_email']);
-        /*
-         * Bildiirm gönderir
-         */
-        __notification_send(
-            $response == 1 ? 'Başarılı' : 'Başarısız',
-            $this->pv['pay']['amount'] . " TL",
-            $response == 1 ? 1 : 0
-        );
-
-        return array("result" => $response, "message" => $error);
-    }
-    private function odeme_gonder($sanalpos_xml)
-    {
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->pv['bank_selected_arr']['api_url']);
-        curl_setopt($ch, CURLOPT_POST, TRUE);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 59);
-
-        if ($this->pv['bank_selected_arr']['virtual_pos_type'] == 1) {
-            curl_setopt($ch, CURLOPT_POSTFIELDS, "DATA=" . $sanalpos_xml);
-        } else if ($this->pv['bank_selected_arr']['virtual_pos_type'] == 2) {
-            curl_setopt($ch, CURLOPT_POSTFIELDS, "prmstr=" . $sanalpos_xml);
-            curl_setopt($ch, CURLOPT_SSLVERSION, "CURL_SSLVERSION_TLSv1_1");
-        } else if ($this->pv['bank_selected_arr']['virtual_pos_type'] == 3) {
-            curl_setopt($ch, CURLOPT_POSTFIELDS, "data=" . $sanalpos_xml);
-        }
-
-        $result = curl_exec($ch);
-        curl_close($ch);
-        return $result;
-    }
-
     //$this->pv['bank_selected_arr']['virtual_pos_type'] == 1 ise Secilen_banka=="ak_bank" || "is_bank" || "halk_bank" || "finans_bank"
     //$this->pv['bank_selected_arr']['virtual_pos_type'] == 2 ise Secilen_banka=="vakifbank"
-    private function odeme_deger_ayarla($sanalpos_xml)
+    /**
+     * Ödeme değerlerini ayarlar
+     * @param string $sanalpos_xml
+     * @return string
+     */
+    private function pay_variable_set(string $sanalpos_xml) : string
     {
         $eski_satis_tutar = $this->pv['pay']['amount'];
 
@@ -525,8 +447,86 @@ class PayController extends Controller
             $this->pv['buyer']['alici_sehir'],
             $this->pv['buyer']['alici_posta_kod']
         ];
-        $sonuc = str_replace($sanalpos_degisken_xml_degiskenleri, $sanalpos_degisken_xml_degerleri, $sanalpos_xml);
         $this->pv['pay']['amount'] = $eski_satis_tutar;
-        return $sonuc;
+        return str_replace($sanalpos_degisken_xml_degiskenleri, $sanalpos_degisken_xml_degerleri, $sanalpos_xml);
+    }
+    /**
+     * Ödeme gönderir
+     * @param $sanalpos_xml
+     * @return bool|string
+     */
+    private function pay_send($sanalpos_xml)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $this->pv['bank_selected_arr']['api_url']);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 59);
+        if ($this->pv['bank_selected_arr']['virtual_pos_type'] == 1) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "DATA=" . $sanalpos_xml);
+        } else if ($this->pv['bank_selected_arr']['virtual_pos_type'] == 2) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "prmstr=" . $sanalpos_xml);
+            curl_setopt($ch, CURLOPT_SSLVERSION, "CURL_SSLVERSION_TLSv1_1");
+        } else if ($this->pv['bank_selected_arr']['virtual_pos_type'] == 3) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "data=" . $sanalpos_xml);
+        }
+        $result = curl_exec($ch);
+        curl_close($ch);
+        return $result;
+    }
+    /**
+     * XML result
+     * @param $odeme_sonuc_xml
+     * @return array
+     */
+    private function xml_result($odeme_sonuc_xml)
+    {
+        $response = 0;
+        $error = '';
+        $xml = simplexml_load_string($odeme_sonuc_xml);
+        if ($this->pv['bank_selected_arr']['virtual_pos_type'] == 1) {
+            $response = $xml->Response == "Approved" ? 1 : 0;
+            $error = isset($xml->ErrMsg) ? (string) $xml->ErrMsg : '';
+        } else if ($this->pv['bank_selected_arr']['virtual_pos_type'] == 2) {
+            $response = $xml->ResultCode == "0000" ? 1 : 0;
+            $error = isset($xml->ResultDetail) ? (string) $xml->ResultDetail : '';
+        } else if ($this->pv['bank_selected_arr']['virtual_pos_type'] == 3) {
+            $response = $xml->Transaction->Response->Message == "Approved" ? 1 : 0;
+            $error = isset($xml->Transaction->Response->ErrorMsg) ? (string) $xml->Transaction->Response->ErrorMsg : '';
+        }
+        $pay_date = date('Y-m-d H:i:s');
+        /*
+         * Veri tabanına kaydeder
+         */
+        $pay = new Pay();
+        $pay->__create([
+            'user_id' => session()->get('users')['authority'] === 'admin' ? 0 : session()->get('users')['id'],
+            'seller_name' => $this->pv['sender']['gonderen_firma'],
+            'order_number' => $this->pv['general']['numara_siparis'],
+            'order_ip' => $this->pv['general']['address_ip'],
+            'order_total' => $this->pv['pay']['amount'],
+            'order_installment' => $this->pv['pay']['installment'],
+            'pay_bank' => $this->pv['bank_selected'],
+            'pay_json' => __json_encode($xml, true),
+            'pay_date' => $pay_date,
+            'pay_result' => $response == 1 ? '1' : '0',
+            'pay_message' => $error,
+            'pay_card_owner' => $this->pv['sender']['gonderen_isim'],
+            'user_phone' => $this->pv['sender']['gonderen_telefon'],
+            'user_email' => $this->pv['general']['address_email'],
+        ]);
+        /*
+         * Mail gönderir
+         */
+        __mail_send(date_translate($pay_date, 2), $this->pv['pay']['amount'], ($response == 1 ? 'basarili' : 'basarisiz'), $this->pv['general']['address_email']);
+        /*
+         * Bildiirm gönderir
+         */
+        __notification_send(
+            $response == 1 ? 'Başarılı' : 'Başarısız',
+            $this->pv['pay']['amount'] . " TL",
+            $response == 1 ? 1 : 0
+        );
+        return ["result" => $response, "message" => $error];
     }
 }

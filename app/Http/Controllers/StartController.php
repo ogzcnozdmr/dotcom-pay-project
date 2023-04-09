@@ -9,11 +9,6 @@ use Illuminate\View\View;
 
 class StartController extends Controller
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $this->startIllegal('homepage');
-    }
 
     /**
      * Start function
@@ -21,6 +16,7 @@ class StartController extends Controller
      */
     public function start () : View
     {
+        $this->startIllegal('homepage');
         $user = new User();
         $pay = new Pay();
         $registered_company_count = $user->__registered_company_count();
