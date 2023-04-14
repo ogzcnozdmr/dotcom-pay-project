@@ -14,6 +14,10 @@
     <nav class="navbar-custom">
         <ul class="navbar-right list-inline float-right mb-0">
             <!-- full screen -->
+            <li class="dropdown notification-list list-inline-item d-none d-md-inline-block" style="margin-right: 50px">
+                Kuante Duş ve Kabin, Ereğli Kapı Mahallesi 10, Acem Cd. No:55/A, 68000 Aksaray (0382) 212 11 58
+            </li>
+            <!-- full screen -->
             <li class="dropdown notification-list list-inline-item d-none d-md-inline-block">
                 <a class="nav-link waves-effect" href="#" id="btn-fullscreen">
                     <i class="mdi mdi-arrow-expand-all noti-icon"></i>
@@ -146,6 +150,12 @@
                         </ul>
                     </li>
                     -->
+                @endif
+
+                @if(in_array(1, $__global['authorization_array']))
+                    <li>
+                        <a href="{{ route('privacy.start') }}" class="waves-effect"><i class="icon-todolist"></i><span> Gizlilik Taahhüdü </span></a>
+                    </li>
                 @endif
             </ul>
         </div>

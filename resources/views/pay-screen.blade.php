@@ -177,6 +177,23 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body text-center">
+                    <img width="60" class="payment-icon-image" src="/assets/images/credit-cards/mastercard.svg" alt="mastercard">
+                    <img width="60" class="payment-icon-image" src="/assets/images/credit-cards/visa.svg" alt="visa">
+                    <img width="60" class="payment-icon-image" src="/assets/images/credit-cards/paypal.svg" alt="paypal">
+                    <img width="60" class="payment-icon-image" src="/assets/images/credit-cards/maestro.svg" alt="maestro">
+                </div>
+                <div class="card-body text-center">
+                    <img width="60" class="payment-icon-image" src="/assets/images/secured-by/mcafee.svg" alt="mcafee">
+                    <img width="60" class="payment-icon-image" src="/assets/images/secured-by/norton.svg" alt="norton">
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('css')

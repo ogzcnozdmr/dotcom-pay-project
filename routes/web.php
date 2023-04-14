@@ -108,4 +108,10 @@ Route::middleware('app.logout')->group(function () {
         Route::post('/installment/set', [\App\Http\Controllers\InstallmentController::class, 'set'])->name('set');
         Route::post('/installment/get', [\App\Http\Controllers\BankController::class, 'get'])->name('get');
     });
+    /**
+     * Privacy
+     */
+    Route::name('privacy.')->group(function () {
+        Route::get('/privacy', [\App\Http\Controllers\PrivacyController::class, 'start'])->name('start');
+    });
 });
