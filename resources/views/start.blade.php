@@ -9,7 +9,7 @@
                         <i class="mdi mdi-cube-outline bg-primary  text-white"></i>
                     </div>
                     <div>
-                        <h5 class="font-16">Kayıtlı Firma</h5>
+                        <h5 class="font-16">Kayıtlı Firma sayısı</h5>
                     </div>
                     <h3 class="mt-4">{{ $registered_company }}</h3>
                 </div>
