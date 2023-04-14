@@ -15,10 +15,10 @@ class BankController extends Controller
      * @param int $id
      * @return View
      */
-    public function start(Request $request, int $id = 1): View
+    public function start(Request $request, int $id = 1) : View
     {
         $this->startIllegal('bank-settings');
-        if (session()->get('users')['authority'] !== "admin"){
+        if (session()->get('users')['authority'] !== 'admin') {
             __redirect('home.danger');
         }
         $bank = new Bank(false);
@@ -39,7 +39,13 @@ class BankController extends Controller
         ]);
     }
 
-    public function settings(Request $request) {
+    /**
+     * Banka ayarlarını işler
+     * @param Request $request
+     * @return void
+     */
+    public function settings(Request $request) : void
+    {
         $bank = new Bank();
         $update = $bank->__update($request->input('id'), [
             "bank_visible" => $request->input('option') ? '1' : '0',
@@ -50,8 +56,13 @@ class BankController extends Controller
                 "user_prov_id"  => $request->input('user_prov_id')
             ]),
             "max_installment"        => $request->input('max_installment'),
-            "min_installment_amount" => $request->input('min_installment_count')
+            "min_installment_amount" => $request->input('min_installment_amount')
         ]);
-        echo $update ? '1' : '0';
+        if ($update) {
+            $this->result['result'] = true;
+            $this->result['message'] = 'Başarıyla güncellendi';
+            $this->result['id'] = $request->input('id');
+        }
+        echo __json_encode($this->result);
     }
 }

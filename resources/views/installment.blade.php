@@ -21,7 +21,7 @@
                         <div class="form-group">
                             <label>İşlem yapılacak banka</label>
                             <div>
-                                <select name="banka" class="custom-select">
+                                <select name="bank" class="custom-select">
                                     @foreach($bank_all_get as $value)
                                         <option value="{{ $value['bank_id'] }}" name="option"{{ $id === $value['bank_id'] ? ' selected' : '' }}>{{ strtoupper($value['bank_name']) }}</option>
                                     @endforeach
@@ -31,26 +31,19 @@
 
                         <div class="form-group">
                             <label>+ Taksit</label>
-                            <select name="taksit" class="form-control">
+                            <select name="installment" class="form-control">
                                 @foreach ($installment_get as $value)
                                     <option value="{{ $value['installment_number'] }}"{{ $value['installment_number'] === $selected_bank['plus_installment'] ? ' selected' : '' }}>{{ $value['installment_number'] }}</option>
                                 @endforeach
                             </select>
                         </div>
 
-                    </form>
-
-                    <div class="form-group">
-                        <div>
-                            <button id="onayla" type="button" class="btn btn-primary waves-effect waves-light">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">
                                 Onayla
                             </button>
                         </div>
-                    </div>
-
-                    <div class="form-group info hide">
-                        <p class="error"></p>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

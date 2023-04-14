@@ -131,11 +131,12 @@
                         <a href="{{ route('installment.start') }}" class="waves-effect"><i class="icon-share"></i><span> + Taksit Ayarları </span></a>
                     </li>
                     <li>
-                        <a href="{{ route('authority.transactionConstraint') }}" class="waves-effect"><i class="icon-cloud-upload"></i><span> İşlem Kısıtla </span></a>
+                        <a href="{{ route('authority.start') }}" class="waves-effect"><i class="icon-cloud-upload"></i><span> İşlem Kısıtla </span></a>
                     </li>
                 @endif
 
                 @if(in_array(5, $__global['authorization_array']))
+                    <!--
                     <li class="menu-title">Haberler</li>
                     <li>
                         <a href="javascript:void(0);" class="waves-effect"><i class="icon-paper-sheet"></i><span> Haberler <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
@@ -144,6 +145,7 @@
                             <li><a href="{{ route('news.start') }}">Haber Listele</a></li>
                         </ul>
                     </li>
+                    -->
                 @endif
             </ul>
         </div>

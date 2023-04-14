@@ -1,23 +1,52 @@
-$('select[name=banka]').change(function(){
-    let val = $(this).val();
-    let path = `/installment/${val}`;
-    window.location.href = path;
-});
+/* global Function */
 
-$('#onayla').click(function(){
-    info("hide");
-    let tihis = $(this);
-    element_status(tihis,false);
-    let value = {
-        id:$("form").find("select[name=banka] option:selected").val(),
-        taksit:$("form").find("select[name=taksit] option:selected").val()
-    };
-    $.post("/installment/set", value, function(data) {
-        if (data === 1) {
-            info(true,"Başarıyla Güncellendi");
-        } else if(data === 0) {
-            info(false,"Güncellenemedi");
-        }
-        element_status(tihis,true);
-    });
+let PageJS = {
+
+    $form : $('form'),
+
+    $bank : null,
+
+    load: function() {
+
+        this.$bank = this.$form.find('select[name=bank]');
+
+        PageJS.initUI();
+
+    },
+
+    initUI: function() {
+
+        PageJS.$bank.change(function() {
+            let val = $(this).val();
+            window.location.href = `/installment/${val}`;
+        });
+
+        PageJS.$form.submit(function (e) {
+
+            e.preventDefault();
+            let $tihis = $(this);
+
+            $.post('/installment/set', {
+                id : PageJS.$bank.find('option:selected').val(),
+                installment : $tihis.find('select[name=installment] option:selected').val()
+            }, function(data) {
+
+                Function.elementStatus($tihis.find('[type=submit]'), true);
+                Function.info(data.result, data.message, PageJS.$form.find('button'));
+
+            }, 'JSON');
+
+        });
+
+    }
+
+};
+
+/*
+ * Initialling
+ */
+$(function() {
+
+    PageJS.load();
+
 });

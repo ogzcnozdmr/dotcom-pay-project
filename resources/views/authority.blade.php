@@ -30,7 +30,6 @@
                         </div>
 
                         <div class="form-group">
-
                             <label>Erişebileceği Sayfalar</label>
                             <div>
                                 @foreach ($authority_pages_get as $value)
@@ -42,19 +41,13 @@
                                 @endforeach
                             </div>
                         </div>
-                    </form>
 
-                    <div class="form-group">
-                        <div>
-                            <button id="onayla" type="button" class="btn btn-primary waves-effect waves-light">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">
                                 Onayla
                             </button>
                         </div>
-                    </div>
-
-                    <div class="form-group info hide">
-                        <p class="error"></p>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -1,21 +1,51 @@
-$('select').change(function(){
-    let val = $(this).val();
-    let path = `/authority/${val}`;
-    window.location.href = path;
-});
+/* global Function */
 
-$('#onayla').click(function(){
-    info("hide");
-    let tihis = $(this);
-    element_status(tihis,false);
+let PageJS = {
 
-    let value = {
-        id:$("form").find("select option:selected").val(),
-        option:$("form").serialize()
-    };
+    $form: $('form'),
 
-    $.post( "/authority/transactionConstraint", value, function(data) {
-        element_status(tihis,true);
-        info(true,"Başarıyla Güncellendi");
-    });
+    $authority : null,
+
+    load: function() {
+
+        this.$authority = this.$form.find('select');
+
+        PageJS.initUI();
+
+    },
+
+    initUI: function () {
+
+        PageJS.$authority.change(function() {
+            let val = $(this).val();
+            window.location.href = `/authority/${val}`;
+        });
+
+        PageJS.$form.submit(function (e) {
+
+            e.preventDefault();
+            let $tihis = $(this);
+
+            $.post('/authority/set', {
+                id : PageJS.$form.find("select option:selected").val(),
+                option : PageJS.$form.serialize()
+            }, function(data) {
+
+                Function.elementStatus($tihis.find('[type=submit]'), true);
+                Function.info(data.result, data.message, PageJS.$form.find('button'));
+
+            }, 'JSON');
+
+        });
+
+    }
+};
+
+/*
+ * Initialling
+ */
+$(function() {
+
+    PageJS.load();
+
 });

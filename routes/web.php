@@ -98,7 +98,7 @@ Route::middleware('app.logout')->group(function () {
      */
     Route::name('authority.')->group(function () {
         Route::get('/authority/{id?}', [\App\Http\Controllers\AuthorityController::class, 'start'])->name('start');
-        Route::post('/authority/transactionConstraint', [\App\Http\Controllers\AuthorityController::class, 'transactionConstraint'])->name('transactionConstraint');
+        Route::post('/authority/set', [\App\Http\Controllers\AuthorityController::class, 'set'])->name('set');
     });
     /**
      * Installment

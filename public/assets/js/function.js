@@ -144,7 +144,7 @@ var Function = {
 
     },
 
-    elementStatus: function(selector,type){
+    elementStatus: function(selector, type) {
 
         let element = (typeof selector) === 'string' ? $(selector) : selector ;
 

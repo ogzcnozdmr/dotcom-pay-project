@@ -47,7 +47,12 @@ class InstallmentController extends Controller
         $update = $bank->__update($request->input('id'), [
             'plus_installment' => $request->input('installment')
         ]);
-        echo $update ? '1' : '0';
+        if ($update) {
+            $this->result['result'] = true;
+            $this->result['message'] = 'Başarıyla güncellendi';
+            $this->result['id'] = $request->input('id');
+        }
+        echo __json_encode($this->result);
     }
     /**
      * Bank plus installment

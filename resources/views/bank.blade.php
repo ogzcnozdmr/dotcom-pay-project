@@ -21,9 +21,9 @@
                         <div class="form-group">
                             <label>İşlem yapılacak banka</label>
                             <div>
-                                <select id="select_banka" class="custom-select">
+                                <select id="select_bank" class="custom-select">
                                     @foreach($bank_info as $value)
-                                        <option value="{{ $value['bank_id'] }}" name="option"{{ $select === $value['bank_id'] ? 'selected' : '' }}>{{ strtoupper($value['bank_name']) }}</option>
+                                        <option value="{{ $value['bank_id'] }}" name="option"{{ $select === $value['bank_id'] ? ' selected' : '' }}>{{ strtoupper($value['bank_name']) }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -72,7 +72,7 @@
                         @endif
                         <div class="form-group">
                             <label>Maximum Taksit</label>
-                            <select id="max_taksit" class="form-control">
+                            <select id="max_installment" class="form-control">
                                 @foreach($installment_data as $key => $value)
                                     <option value="{{ $value['installment_number'] }}"{{ $value['installment_number'] === $bank_detail['max_installment'] ? ' selected' : '' }}>{{ $value['installment_number'] }}</option>
                                 @endforeach
@@ -82,29 +82,24 @@
                             <label>
                                 Minimum Taksit Limit
                             </label>
-                            <input type="number" name="min_taksit_miktar" class="form-control" value="{{ $bank_detail['min_installment_amount'] }}">
+                            <input type="number" name="min_installment_amount" class="form-control" value="{{ $bank_detail['min_installment_amount'] }}">
                         </div>
                         <div class="form-group">
                             <label>Banka Aktif</label>
                             <div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="banka_aktif" data-parsley-multiple="groups"
+                                    <input type="checkbox" class="custom-control-input" id="bank_visible" data-parsley-multiple="groups"
                                            data-parsley-mincheck="2" value="{{ $bank_detail['bank_id'] }}" name="input"{{ $bank_detail['bank_visible'] === '1' ? ' checked' : '' }}>
-                                    <label class="custom-control-label" for="banka_aktif">Bankanın aktiflik durumu</label>
+                                    <label class="custom-control-label" for="bank_visible">Bankanın aktiflik durumu</label>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                    <div class="form-group">
-                        <div>
-                            <button id="onayla" type="button" class="btn btn-primary waves-effect waves-light">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">
                                 Onayla
                             </button>
                         </div>
-                    </div>
-                    <div class="form-group info hide">
-                        <p class="error"></p>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -1,26 +1,56 @@
-$('#select_banka').change(function(){
-    let val = $(this).val();
-    let path = `/bank/${val}`;
-    window.location.href = path;
-});
+/* global Function */
 
-$('#onayla').click(function(){
-    info("hide");
-    let tihis = $(this);
-    element_status(tihis,false);
+let PageJS = {
 
-    let value = {
-        id:$("form").find("#select_banka option:selected").val(),
-        option:$("form").find("input[type=checkbox]:checked").length,
-        name:$("form").find("input[name=name]").val(),
-        password:$("form").find("input[name=password]").val(),
-        client_id:$("form").find("input[name=client_id]").val(),
-        user_prov_id:$("form").find("input[name=user_prov_id]").val(),
-        max_installment:$("form").find("#max_taksit option:selected").val(),
-        min_installment_count:$("form").find("input[name=min_taksit_miktar]").val()
-    };
-    $.post("/bank/settings", value, function(data) {
-        element_status(tihis,true);
-        info(true,"Başarıyla Güncellendi");
-    });
+    $form : $('form'),
+
+    $bank : $('#select_bank'),
+
+    load: function() {
+
+        PageJS.initUI();
+
+    },
+
+    initUI: function() {
+
+        PageJS.$bank.change(function(){
+            let val = $(this).val();
+            window.location.href = `/bank/${val}`;
+        });
+
+        PageJS.$form.submit(function (e) {
+
+            e.preventDefault();
+            let $tihis = $(this);
+
+            $.post('/bank/settings', {
+                id : PageJS.$bank.find("option:selected").val(),
+                option : $tihis.find("input[type=checkbox]:checked").length,
+                name : $tihis.find("input[name=name]").val(),
+                password : $tihis.find("input[name=password]").val(),
+                client_id : $tihis.find("input[name=client_id]").val(),
+                user_prov_id : $tihis.find("input[name=user_prov_id]").val(),
+                max_installment : $tihis.find("#max_installment option:selected").val(),
+                min_installment_amount : $tihis.find("input[name=min_installment_amount]").val()
+            }, function(data) {
+
+                Function.elementStatus($tihis.find('[type=submit]'), true);
+                Function.info(data.result, data.message, $tihis.find('[type=submit]'));
+
+            }, 'JSON');
+
+        });
+
+    }
+
+};
+
+/*
+ * Initialling
+ */
+$(function() {
+
+    PageJS.load();
+
 });
