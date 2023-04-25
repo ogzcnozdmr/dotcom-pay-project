@@ -29,8 +29,9 @@ let PageJS = {
                 option : $tihis.find("input[type=checkbox]:checked").length,
                 name : $tihis.find("input[name=name]").val(),
                 password : $tihis.find("input[name=password]").val(),
-                client_id : $tihis.find("input[name=client_id]").val(),
-                user_prov_id : $tihis.find("input[name=user_prov_id]").val(),
+                client : $tihis.find("input[name=client]").val(),
+                storekey : $tihis.find("input[name=storekey]").val(),
+                storetype : $tihis.find("input[name=storetype]").val(),
                 max_installment : $tihis.find("#max_installment option:selected").val(),
                 min_installment_amount : $tihis.find("input[name=min_installment_amount]").val()
             }, function(data) {

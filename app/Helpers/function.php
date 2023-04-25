@@ -33,6 +33,21 @@ function __json_decode(string|null $json, bool $type = false) : array | object
     return json_decode($json, $type) ?: ($type ? [] : new \stdClass());
 }
 
+/**
+ * Ödeme sonucunu dönderir
+ * @param $pay_code
+ * @return string
+ */
+function __pay_result_titles($pay_code) : string
+{
+    return match ($pay_code) {
+        'process' => 'Ödeme bekliyor',
+        'error' => 'Ödeme başarısız',
+        'success' => 'Ödeme alındı',
+        default => 'No CODE',
+    };
+}
+
 function __ip()
 {
     $ip = 'UNKNOWN';
@@ -157,7 +172,7 @@ function __mail_send($tarih, $tutar, $sonuc, $eposta) {
     //$mail->AddAddress($eposta);
 
     $mail->AddBCC($eposta);
-    $mail->AddBCC("muhasebe@eraslan.com.tr");
+    $mail->AddBCC("o.ozdmr.40@gmail.com");
     $mail->AddBCC("bilgi@noktacommedya.com");
 
     $mail->CharSet = 'UTF-8';

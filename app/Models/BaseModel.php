@@ -68,21 +68,17 @@ class BaseModel extends Model
 
     /**
      * Veriyi günceller
-     * @param int $id
+     * @param int|null $id
      * @param array $array
-     * @param int $limit
+     * @param array $where
      * @return bool
      */
-    public function __update(int|null $id = null, array $array = [], int $limit = 0) : bool
+    public function __update(int|null $id = null, array $array = [], array $where = []) : bool
     {
-        $where = [];
         if ($id !== null) {
             $where[$this->getTable().'_id'] = $id;
         }
         $builder = self::where($where)->update($array);
-        if ($limit !== 0) {
-            $builder = $builder->limit($limit);
-        }
         return builder_return_data_bool($builder);
     }
 }

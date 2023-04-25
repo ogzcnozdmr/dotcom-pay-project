@@ -22,9 +22,11 @@ return new class extends Migration
             $table->string('pay_bank', 100);
             $table->longText('pay_json');
             $table->dateTime('pay_date')->useCurrent();
-            $table->enum('pay_result', ['0', '1']);
+            $table->dateTime('pay_success_date')->useCurrent();
+            $table->enum('pay_result', ['process', 'error', 'success']);
             $table->text('pay_message');
             $table->string('pay_card_owner', 100);
+            $table->string('pay_ip', 15);
             $table->string('user_phone', 11);
             $table->string('user_email', 120);
             $table->enum('pay_visible', ['0', '1'])->default('0');

@@ -41,7 +41,7 @@
                                     <td>{{ $value['pay_card_owner'] }}</td>
                                     <td>{{ $value['order_total'] }}</td>
                                     <td>{{ $value['pay_date'] }}</td>
-                                    <td>{{ $value['pay_result'] === '1' ? 'BAŞARILI' : 'BAŞARISIZ' }}</td>
+                                    <td>{{ __pay_result_titles($value['pay_result']) }}</td>
                                     <td class="text-center"><button class="btn btn-primary cikti">Çıktı Al</button></td>
                                 </tr>
                             @endforeach

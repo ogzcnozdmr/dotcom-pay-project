@@ -16,11 +16,12 @@ return new class extends Migration
             $table->string('bank_name', 100);
             $table->string('bank_variable', 30);
             $table->text('api_url');
+            $table->text('api_security_url');
             $table->text('bank_json');
             $table->integer('max_installment')->default(12);
             $table->integer('min_installment_amount');
             $table->integer('plus_installment')->default(0);
-            $table->integer('virtual_pos_type')->default(1);
+            $table->enum('virtual_pos_type', ['1', '2', '3', '4'])->default('1');
             $table->string('bank_photo');
             $table->enum('bank_visible', ['0', '1'])->default('1');
         });

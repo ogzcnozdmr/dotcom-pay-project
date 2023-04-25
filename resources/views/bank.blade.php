@@ -29,47 +29,29 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>
-                                @if($bank_detail['virtual_pos_type'] === 1)
-                                    Name
-                                @elseif($bank_detail['virtual_pos_type'] === 2)
-                                    MerchantId
-                                @elseif($bank_detail['virtual_pos_type'] === 3)
-                                    Terminal ID
-                                @endif
-                            </label>
-                            <input type="text" name="name" class="form-control" value="{{ $bank_detail_api['name'] }}">
+                            <label>Name</label>
+                            <input type="text" name="name" value="{{ $bank_detail_api['name'] }}" class="form-control" required/>
                         </div>
+
                         <div class="form-group">
-                            <label>
-                                @if($bank_detail['virtual_pos_type'] === 1 || $bank_detail['virtual_pos_type'] === 2)
-                                    Password
-                                @elseif($bank_detail['virtual_pos_type'] === 3)
-                                    Provision Password
-                                @endif
-                            </label>
-                            <input type="text" name="password" class="form-control" value="{{ $bank_detail_api['password'] }}">
+                            <label>Password</label>
+                            <input type="text" name="password" value="{{ $bank_detail_api['password'] }}" class="form-control" required/>
                         </div>
+
                         <div class="form-group">
-                            <label>
-                                @if($bank_detail['virtual_pos_type'] === 1)
-                                    ClientId
-                                @elseif($bank_detail['virtual_pos_type'] === 2)
-                                    TerminalNo
-                                @elseif($bank_detail['virtual_pos_type'] === 3)
-                                    MerchantID
-                                @endif
-                            </label>
-                            <input type="text" name="client_id" class="form-control" value="{{ $bank_detail_api['client_id'] }}">
+                            <label>Client</label>
+                            <input type="text" name="client" value="{{ $bank_detail_api['client'] }}" class="form-control" required/>
                         </div>
-                        @if($bank_detail['virtual_pos_type'] === 3)
-                            <div class="form-group">
-                                <label>
-                                    ProvUserID
-                                </label>
-                                <input type="text" name="user_prov_id" class="form-control" value="{{ $bank_detail_api['user_prov_id'] }}">
-                            </div>
-                        @endif
+
+                        <div class="form-group">
+                            <label>Store Key</label>
+                            <input type="text" name="storekey" value="{{ $bank_detail_api['storekey'] }}" class="form-control" required/>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Store Type</label>
+                            <input type="text" name="storetype" value="{{ $bank_detail_api['storetype'] }}" class="form-control" readonly/>
+                        </div>
                         <div class="form-group">
                             <label>Maximum Taksit</label>
                             <select id="max_installment" class="form-control">

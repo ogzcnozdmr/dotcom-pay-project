@@ -100,7 +100,6 @@ class PayController extends Controller
         $lists = $pay->payList(session()->get('users')['authority'], session()->get('users')['id']);
         foreach ($lists as $get) {
             $taksit = $get['order_installment'] !== 0 ? $get['order_installment'] : 'PEŞİN';
-            $sonuc = $get['pay_result'] === '1' ? 'BAŞARILI' : 'BAŞARISIZ';
             $link = $get['user_id'] == '0' ? $get['seller_name'] : '<a href="seller/pay/'.$get['user_id'].'">'.$get['seller_name'].'<a/>';
 
             $result[] = [
@@ -111,7 +110,7 @@ class PayController extends Controller
                 $taksit,
                 $get['bank_name'],
                 date_translate($get['pay_date'],2),
-                $sonuc
+                __pay_result_titles($get['pay_result'])
             ];
         }
         echo __json_encode($result);
@@ -212,6 +211,9 @@ class PayController extends Controller
         $this->pv['buyer']['alici_adres'] = '';
         $this->pv['buyer']['alici_sehir'] = '';
         $this->pv['buyer']['alici_posta_kod'] = '';
+
+
+
         $sanalpos_xml = '';
         //ÖDEMEYİ APİYE YOLLAYACAK DEĞERLER AYARLANIYOR
         $sanalpos_xml = $this->pay_variable_set($sanalpos_xml);
@@ -509,7 +511,7 @@ class PayController extends Controller
             'pay_bank' => $this->pv['bank_selected'],
             'pay_json' => __json_encode($xml, true),
             'pay_date' => $pay_date,
-            'pay_result' => $response == 1 ? '1' : '0',
+            'pay_result' => $response == 1 ? 'success' : 'error',
             'pay_message' => $error,
             'pay_card_owner' => $this->pv['sender']['gonderen_isim'],
             'user_phone' => $this->pv['sender']['gonderen_telefon'],

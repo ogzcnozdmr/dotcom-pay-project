@@ -101,6 +101,13 @@
                             <label>Güvenlik Numarası</label>
                             <input type="text" name="kart_cvc" class="form-control bank-ccv" required placeholder="Güvenlik Numarası"/>
                         </div>
+                        <div class="form-group">
+                            <label>Kart Tipi</label>
+                            <select name="cardType" class="custom-select">
+                                <option value="1">VISA</option>
+                                <option value="2">Master Card</option>
+                            </select>
+                        </div>
                         <div class="kartsistemi_ac">
                             <div class="form-group">
                                 <div>

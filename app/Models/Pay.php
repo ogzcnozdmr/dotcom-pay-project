@@ -30,7 +30,14 @@ class Pay extends BaseModel
      */
     public $timestamps = false;
 
-    public static function payList($authority, $id) {
+    /**
+     * Ödeme listesini getirir
+     * @param $authority
+     * @param $id
+     * @return array
+     */
+    public static function payList($authority, $id) : array
+    {
         $where = [
             'pay_visible' => '1'
         ];
@@ -44,10 +51,16 @@ class Pay extends BaseModel
         return builder_return_data($builder, null, 'pay_id,user_id,seller_name,pay_card_owner,order_total,pay_date,order_installment,pay_result,bank_name');
     }
 
+    /**
+     * Başarılı ödemeleri getirir
+     * @param $date1
+     * @param $date2
+     * @return array
+     */
     public static function __pay_success ($date1, $date2) {
         $builder = DB::table('pay')
             ->where([
-                'pay_result' => '1',
+                'pay_result' => 'success',
                 'pay_visible' => '1'
             ])
             ->where('pay_date', '>=', $date1)
@@ -55,7 +68,14 @@ class Pay extends BaseModel
         return builder_return_data($builder, 1, 'sum(order_total) as total,count(*) as success');
     }
 
-    public static function __pay_total_count ($date1, $date2) : int {
+    /**
+     * Tarih aralığındaki ödeme isteğini verir
+     * @param $date1
+     * @param $date2
+     * @return int
+     */
+    public static function __pay_total_count ($date1, $date2) : int
+    {
         return self::where([
                 'pay_visible' => '1'
             ])

@@ -52,8 +52,9 @@ class BankController extends Controller
             "bank_json" =>__json_encode([
                 "name"          => $request->input('name'),
                 "password"      => $request->input('password'),
-                "client_id"     => $request->input('client_id'),
-                "user_prov_id"  => $request->input('user_prov_id')
+                "client"     => $request->input('client'),
+                "storekey"     => $request->input('storekey'),
+                "storetype"  => $request->input('storetype')
             ]),
             "max_installment"        => $request->input('max_installment'),
             "min_installment_amount" => $request->input('min_installment_amount')

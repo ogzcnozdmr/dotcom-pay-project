@@ -47,20 +47,20 @@ $(document).ready(function(){
             let tutar = form_sanal_satis_bilgileri.find("input[name=tutar]").val();
             let taksit = (parseFloat(tutar)>=parseFloat(min_taksit_miktar))?form_sanal_satis_bilgileri.find("select[name=taksit] option:selected").val():1;
             let values = {
-                post:'Sanal-pos',
-                satis:{
-                    banka:form_sanal_satis_bilgileri.find("select[name=banka] option:selected").val(),
-                    tutar:tutar,
-                    taksit:taksit
+                order:{
+                    bank:form_sanal_satis_bilgileri.find("select[name=banka] option:selected").val(),
+                    total:tutar,
+                    installment:taksit
                 },
-                kart:{
-                    numara:form_sanal_kart_bilgileri.find("input[name=kart_no]").val(),
-                    ad_soyad:form_sanal_kart_bilgileri.find("input[name=kart_ad_soyad]").val(),
-                    son_kullanma:form_sanal_kart_bilgileri.find("input[name=kart_son_kul]").val(),
-                    cvc:form_sanal_kart_bilgileri.find("input[name=kart_cvc]").val()
+                card:{
+                    number:form_sanal_kart_bilgileri.find("input[name=kart_no]").val(),
+                    name_surname:form_sanal_kart_bilgileri.find("input[name=kart_ad_soyad]").val(),
+                    expiration:form_sanal_kart_bilgileri.find("input[name=kart_son_kul]").val(),
+                    cvv:form_sanal_kart_bilgileri.find("input[name=kart_cvc]").val(),
+                    type:form_sanal_kart_bilgileri.find("select[name=cardType] option:selected").val()
                 },
-                musteri:{
-                    ad_soyad:form_sanal_musteri_bilgileri.find("input[name=musteri_ad]").val(),
+                customer:{
+                    name_surname:form_sanal_musteri_bilgileri.find("input[name=musteri_ad]").val(),
                     email:form_sanal_musteri_bilgileri.find("input[name=musteri_email]").val(),
                     tel:form_sanal_musteri_bilgileri.find("input[name=musteri_tel]").val()
                 }
