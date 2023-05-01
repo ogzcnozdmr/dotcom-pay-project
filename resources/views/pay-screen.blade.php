@@ -203,6 +203,13 @@
     </div>
 @endsection
 
+<!--
+
+Üye İşyeri No 676815632
+Terminal No S0YHBT01 S0YHBT02 S0YHBT03 S0YHBT04 S0YHBT05
+
+-->
+
 @section('css')
     <link href="{{ asset('assets/css/bank-card.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/pages/pay-screen.css') }}" rel="stylesheet" type="text/css">
