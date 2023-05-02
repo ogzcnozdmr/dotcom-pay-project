@@ -255,7 +255,7 @@ class PaymentController extends Controller
          */
         $microtime = microtime();
 
-        $okUrl = $failUrl = route('pay.result', [
+        $okUrl = $failUrl = route('home.result', [
             'bank' => $this->selectedBank,
             'installment' => $this->cardInformation['installment']
         ]);

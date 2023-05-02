@@ -76,11 +76,14 @@ class PayController extends Controller
      * Ödeme Ekranı
      * @return View
      */
-    public function screen() : View
+    public function screen($orderCode = '') : View
     {
         $this->startIllegal('public');
+
+        //TODO::YAPILACAK sipariş kodu boş değilse kontroller yapılıp o sipariş üzerinden gidilecekif ($orderCode !== '') {}
+
         $installment = new Installment(false);
-        $bank = new Bank(false);
+        $bank = new Bank();
 
         return view('pay-screen', [
             'installment' => $installment->__data_available('installment_number'),

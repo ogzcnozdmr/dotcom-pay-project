@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 Route::name('home.')->group(function () {
     Route::get('/', [\App\Http\Controllers\StartController::class, 'start'])->middleware('app.logout')->name('start');
     Route::get('/404', [\App\Http\Controllers\StartController::class, 'danger'])->name('danger');
+    Route::post('/pay/result/{bank}/{installment}', [\App\Http\Controllers\PaymentController::class, 'result'])->name('result');
 });
 
 Route::middleware('app.login')->group(function () {
@@ -81,7 +82,6 @@ Route::middleware('app.logout')->group(function () {
         Route::get('/pay/screen/{orderCode?}', [\App\Http\Controllers\PayController::class, 'screen'])->name('screen');
         Route::get('/pay/dashboard', [\App\Http\Controllers\PayController::class, 'dashboard'])->name('dashboard');
         Route::post('/pay/request', [\App\Http\Controllers\PaymentController::class, 'start'])->name('request');
-        Route::post('/pay/result/{bank}/{installment}', [\App\Http\Controllers\PaymentController::class, 'result'])->name('result');
     });
     /**
      * Profile
