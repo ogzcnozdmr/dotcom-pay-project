@@ -17,7 +17,7 @@
         <div class="col-xl-12">
             <div class="card m-b-30">
                 <div class="card-body">
-                    <form>
+                    <form  method="POST">
                         <div class="form-group">
                             <label>İşlem yapılacak banka</label>
                             <div>

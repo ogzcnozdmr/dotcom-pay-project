@@ -45,7 +45,7 @@ class PaymentController extends Controller
      */
     public function start(Request $request) : void
     {
-        $this->selectedBank = $request->input('order')['bank'];
+        $this->selectedBank = $request->input('order_bank');
         /*
          * Sipariş kodunu oluşturur
          */
@@ -53,18 +53,18 @@ class PaymentController extends Controller
 
         $this->order = [
             'user_id' => session()->get('users')['authority'] === 'admin' ? 0 : session()->get('users')['id'],
-            'seller_name' => $request->input('customer')['name_surname'],
+            'seller_name' => $request->input('customer_name'),
             'order_number' => $this->orderCode,
             'order_ip' => $this->ip,
-            'order_total' => $request->input('order')['total'],
-            'order_installment' => $request->input('order')['installment'],
+            'order_total' => $request->input('order_total'),
+            'order_installment' => $request->input('order_installment'),
             'pay_bank' => $this->selectedBank,
             'pay_json' => '{}',//
             'pay_result' => 'process',//
             'pay_message' => 'Ödeme bekleniyor',//
-            'pay_card_owner' => $request->input('card')['name_surname'],
-            'user_phone' => $request->input('customer')['tel'],
-            'user_email' => $request->input('customer')['email'],
+            'pay_card_owner' => $request->input('card_name_surname'),
+            'user_phone' => $request->input('customer_phone'),
+            'user_email' => $request->input('customer_email'),
             'pay_ip' => ''//
         ];
 
@@ -80,12 +80,12 @@ class PaymentController extends Controller
          */
         $this->bankDetail();
 
-        $this->cardInformation['number']      = str_replace(" ","", trim($request->input('card')['number']));
-        $this->cardInformation['expire']      = str_replace(" ","", trim($request->input('card')['expiration']));
-        $this->cardInformation['cvv']         = str_replace(" ","", trim($request->input('card')['cvv']));
-        $this->cardInformation['name']        = $request->input('card')['name_surname'];
-        $this->cardInformation['type']        = $request->input('card')['type'];
-        $this->cardInformation['installment'] = $request->input('order')['installment'];
+        $this->cardInformation['number']      = str_replace(" ","", trim($request->input('card_number')));
+        $this->cardInformation['expire']      = str_replace(" ","", trim($request->input('card_expiration')));
+        $this->cardInformation['cvv']         = str_replace(" ","", trim($request->input('card_cvv')));
+        $this->cardInformation['name']        = $request->input('card_name_surname');
+        $this->cardInformation['type']        = $request->input('card_type');
+        $this->cardInformation['installment'] = $request->input('order_installment');
 
         /*
          * Bütün ödeme işlemlerini başlatır
@@ -255,14 +255,17 @@ class PaymentController extends Controller
     private function paymentStart() : void
     {
         /*
-         * Tarih veya her seferinde degisen bir deger güvenlik amaçli
+         * Tarih veya her seferinde değişen bir değer, güvenlik amaçlı
          */
         $microtime = microtime();
 
-        $okUrl = $failUrl = url()->previous()."/pay/result/{$this->selectedBank}/{$this->cardInformation['installment']}";
+        $okUrl = $failUrl = route('pay.result', [
+            'bank' => $this->selectedBank,
+            'installment' => $this->cardInformation['installment']
+        ]);
         $currency = "949";
 
-        // 3D modelinde hash hesaplamasinda islem tipi ve taksit kullanilmiyor
+        // 3D modelinde hash hesaplamasında işlem tipi ve taksit kullanılmıyor
         switch ($this->selectedVirtualCard['virtual_pos_type']) {
             case '1':
                 $hashstr = $this->bankDetail['client'] . $this->orderCode . $this->orderTotal . $okUrl . $failUrl . $microtime . $this->bankDetail['storekey'];
@@ -663,7 +666,9 @@ class PaymentController extends Controller
     private function paymentFinish(null|array $json = null) : void
     {
         $json['result'] = $json['result'] ? '1' : '0';
-        $siparisUrl = url()->previous()."/pay/{$this->orderCode}";
+        $siparisUrl = route('pay.screen', [
+            'orderCode' => $this->orderCode
+        ]);
         /*
          * Sipariş bilgisi varsa email ve bildirim yollar
          */

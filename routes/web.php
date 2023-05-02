@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
  * Test
  */
 /*Route::name('test.')->group(function () {
-    echo url()->previous();
+    echo url('/adna');
 
 
 
@@ -82,10 +82,10 @@ Route::middleware('app.logout')->group(function () {
     Route::name('pay.')->group(function () {
         Route::get('/pay/list', [\App\Http\Controllers\PayController::class, 'list'])->name('list');
         Route::post('/pay/postList', [\App\Http\Controllers\PayController::class, 'postList'])->name('postList');
-        Route::get('/pay/screen', [\App\Http\Controllers\PayController::class, 'screen'])->name('screen');
+        Route::get('/pay/screen/{orderCode?}', [\App\Http\Controllers\PayController::class, 'screen'])->name('screen');
         Route::get('/pay/dashboard', [\App\Http\Controllers\PayController::class, 'dashboard'])->name('dashboard');
         Route::post('/pay/request', [\App\Http\Controllers\PaymentController::class, 'start'])->name('request');
-        Route::post('/pay/result/{bank}/{installment}', [\App\Http\Controllers\PaymentController::class, 'start'])->name('request');
+        Route::post('/pay/result/{bank}/{installment}', [\App\Http\Controllers\PaymentController::class, 'start'])->name('result');
     });
     /**
      * Profile
@@ -119,7 +119,7 @@ Route::middleware('app.logout')->group(function () {
     Route::name('installment.')->group(function () {
         Route::get('/installment/{id?}', [\App\Http\Controllers\InstallmentController::class, 'start'])->name('start');
         Route::post('/installment/set', [\App\Http\Controllers\InstallmentController::class, 'set'])->name('set');
-        Route::post('/installment/get', [\App\Http\Controllers\BankController::class, 'get'])->name('get');
+        Route::post('/installment/get', [\App\Http\Controllers\InstallmentController::class, 'get'])->name('get');
     });
     /**
      * Privacy
