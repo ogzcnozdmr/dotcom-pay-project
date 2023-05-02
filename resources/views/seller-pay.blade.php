@@ -79,6 +79,5 @@
     <script src="{{ asset('plugins/datatables/buttons.colVis.min.js') }}"></script>
     <!-- Datatable init js -->
     <script src="{{ asset('assets/pages/datatables.init.js') }}"></script>
-    <script src="{{ asset('assets/js/sweetalert.js') }}"></script>
     <script src="{{ asset('assets/js/pages/seller/list.js') }}"></script>
 @endsection

@@ -13,6 +13,7 @@
             ]
         ]
     ])
+    <input type="hidden" id="payResult" data-result="" data-result="">
     <input type="hidden" id="min_installment_count" data-value="{{ $bank[0]['min_installment_amount'] }}">
     <div class="row">
         <div class="col-lg-12">
@@ -197,30 +198,7 @@
             </div>
         </div>
     </div>
-
-    <div id="payModal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
-
-<!--
-
-Üye İşyeri No 676815632
-Terminal No S0YHBT01 S0YHBT02 S0YHBT03 S0YHBT04 S0YHBT05
-
--->
 
 @section('css')
     <link href="{{ asset('assets/css/bank-card.css') }}" rel="stylesheet" type="text/css">

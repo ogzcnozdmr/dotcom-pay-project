@@ -1,4 +1,23 @@
 $(document).ready(function(){
+    const urlParams = new URLSearchParams(window.location.search);
+    console.log(urlParams.get('result'));
+    //const result = urlParams.get('result');
+
+    if (urlParams.get('result') !== null && urlParams.get('message') !== null) {
+
+        //$.notify(urlParams.get('message'), urlParams.get('result') === '1' ? 'success' : 'error');
+
+        Swal.fire(
+            'Ödeme İşlemi',
+            urlParams.get('message'),
+            urlParams.get('result') === '1' ? 'success' : 'error'
+        )
+
+    }
+
+
+
+
     let min_taksit_miktar = $('#min_installment_count').data('value')
     console.log("min = "+min_taksit_miktar);
 

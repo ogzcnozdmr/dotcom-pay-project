@@ -5,6 +5,7 @@
 <script src="{{ asset('assets/js/jquery.slimscroll.js') }}"></script>
 <script src="{{ asset('assets/js/waves.min.js') }}"></script>
 <!-- App js -->
+<script src="{{ asset('assets/js/sweetalert.js') }}"></script>
 <script src="{{ asset('assets/js/notify.js') }}"></script>
 <script src="{{ asset('assets/js/function.js') }}"></script>
 <script src="{{ asset('assets/js/function_old.js') }}"></script>

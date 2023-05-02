@@ -18,10 +18,6 @@ use Illuminate\Support\Facades\Route;
  */
 /*Route::name('test.')->group(function () {
     echo url('/adna');
-
-
-
-
     die();
 });*/
 
@@ -85,7 +81,7 @@ Route::middleware('app.logout')->group(function () {
         Route::get('/pay/screen/{orderCode?}', [\App\Http\Controllers\PayController::class, 'screen'])->name('screen');
         Route::get('/pay/dashboard', [\App\Http\Controllers\PayController::class, 'dashboard'])->name('dashboard');
         Route::post('/pay/request', [\App\Http\Controllers\PaymentController::class, 'start'])->name('request');
-        Route::post('/pay/result/{bank}/{installment}', [\App\Http\Controllers\PaymentController::class, 'start'])->name('result');
+        Route::post('/pay/result/{bank}/{installment}', [\App\Http\Controllers\PaymentController::class, 'result'])->name('result');
     });
     /**
      * Profile

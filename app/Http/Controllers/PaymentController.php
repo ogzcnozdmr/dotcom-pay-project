@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bank;
 use App\Models\Pay;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class PaymentController extends Controller
 {
@@ -145,17 +146,12 @@ class PaymentController extends Controller
                     $index1 = $index2 + 1;
                 }
 
-                /*if ($this->selectedVirtualCard['banka_degisken'] === "teb") {
+                if ($this->selectedBank === "is") {
                     $paramsval = $request->input('clientId').$paramsval;//clientId != clientid
-                }*/
+                }
 
                 $hashval = $paramsval.$this->bankDetail['storekey'];
                 $hash = base64_encode(pack('H*',sha1($hashval)));
-
-                /*echo "paramsval     = $paramsval    <br>";
-                echo "hashparamsval = $hashparamsval<br>";
-                echo "hashparam     = $hashparam    <br>";
-                echo "hash          = $hash         <br>";*/
 
                 if ($paramsval != $hashparamsval || $hashparam != $hash) {
                     $this->paymentFinish([
@@ -640,7 +636,8 @@ class PaymentController extends Controller
      */
     private function getOrder() : void
     {
-        $order = current(Orders::__data_pay(null, 'user_id,user_email,order_code,order_total,user_name,user_name_sur,user_phone', ['order_code' => $this->orderCode]));
+        $pay = new Pay();
+        $order = current($pay->__data(null, 'user_id,user_email,order_number,order_total,user_phone', ['order_number' => $this->orderCode]));
         /*
          * Sipariş varsa
          */
@@ -666,7 +663,7 @@ class PaymentController extends Controller
     private function paymentFinish(null|array $json = null) : void
     {
         $json['result'] = $json['result'] ? '1' : '0';
-        $siparisUrl = route('pay.screen', [
+        $orderUrl = route('pay.screen', [
             'orderCode' => $this->orderCode
         ]);
         /*
@@ -681,18 +678,21 @@ class PaymentController extends Controller
             } else {
                 $sonucText = 'Online ödeme işlemi başarısız.';
             }
-            $icerik = "<b> {$sonucText} </b> <br/> Sipariş kodunuz: <a href='{$siparisUrl}' target='_blank'>{$this->orderCode}</a> ile sipariş detaylarınızı öğrenebilirsiniz.";
+            $icerik = "<b> {$sonucText} </b> <br/> Sipariş kodunuz: <a href='{$orderUrl}' target='_blank'>{$this->orderCode}</a> ile sipariş detaylarınızı öğrenebilirsiniz.";
             //__mail_send(date('Y-m-d H:i:s'), $this->order['order_total'], $sonucText, $alici);
             __notification_send($konu, "{$icerik}<br/>Message: {$json['message']}", $json['result'] === '1' ? 'success' : 'danger');
         }
         /*
          * Yönlendirmeyi yapar
          */
-        $redirectLink = "{$siparisUrl}?result={$json['result']}&message={$json['message']}";
+        $redirectLink = "{$orderUrl}?result={$json['result']}&message={$json['message']}";
         if ($json['result'] === '1') {
-            $redirectLink .= "&tutar={$this->order['order_total']}";
+            $redirectLink .= "&total={$this->order['order_total']}";
         }
-        header("Location: $redirectLink");
+        if (!Session::isStarted()) {
+            Session::start();
+        }
+        header("Location: $redirectLink", true);
         die();
     }
 
