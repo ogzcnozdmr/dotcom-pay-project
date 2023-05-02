@@ -68,7 +68,7 @@
                         </div>
                         <div class="form-group">
                             <label>Tutar</label>
-                            <input value="0.1" type="number" name="order_total" class="form-control" placeholder="Tutar" required/>
+                            <input type="number" name="order_total" class="form-control" placeholder="Tutar" required/>
                         </div>
                         <div class="form-group hide">
                             <label>Taksit</label>
@@ -86,25 +86,25 @@
                         <p class="sub-title">Kredi kartı bilgilerinizi giriniz.</p>
                         <div class="form-group">
                             <label>Kart Numarası</label>
-                            <input value="5235290172235122" type="text" name="card_number" class="form-control bank-number" placeholder="Kart Numaranız" required/>
+                            <input type="text" name="card_number" class="form-control bank-number" placeholder="Kart Numaranız" required/>
                         </div>
                         <div class="form-group">
                             <label>Kart Üzerindeki Ad/Soyad</label>
-                            <input value="oğuzcan özdemir" type="text" name="card_name_surname" class="form-control bank-inputname" placeholder="Kart Üzerindeki Ad/Soyad" required/>
+                            <input type="text" name="card_name_surname" class="form-control bank-inputname" placeholder="Kart Üzerindeki Ad/Soyad" required/>
                         </div>
                         <div class="form-group">
                             <label>Son Kullanma Tarihi</label>
-                            <input value="04/29" type="text" name="card_expiration" class="form-control bank-expire" placeholder="Son Kullanma Tarihi" required/>
+                            <input type="text" name="card_expiration" class="form-control bank-expire" placeholder="Son Kullanma Tarihi" required/>
                         </div>
                         <div class="form-group">
                             <label>Güvenlik Numarası</label>
-                            <input value="" type="text" name="card_cvv" class="form-control bank-ccv" placeholder="Güvenlik Numarası" required/>
+                            <input type="text" name="card_cvv" class="form-control bank-ccv" placeholder="Güvenlik Numarası" required/>
                         </div>
                         <div class="form-group">
                             <label>Kart Tipi</label>
                             <select name="card_type" class="custom-select">
                                 <option value="1">VISA</option>
-                                <option value="2" selected>Master Card</option>
+                                <option value="2">Master Card</option>
                             </select>
                         </div>
                         <div class="kartsistemi_ac">
@@ -132,15 +132,15 @@
                         <p class="sub-title">Müşteri bilgilerinizi giriniz.</p>
                         <div class="form-group">
                             <label>Firma / Müşteri Adı</label>
-                            <input value="Oğuzcan Özdemir" type="text" name="customer_name" class="form-control" {{ session()->get('users')['authority'] !=="admin" ? 'readonly' : 'required' }} placeholder="Firma / Müşteri Adı" value="{{ session()->get('users')['authority'] !=="admin" ? $login_get['user_name'] : '' }}" required/>
+                            <input type="text" name="customer_name" class="form-control" {{ session()->get('users')['authority'] !=="admin" ? 'readonly' : 'required' }} placeholder="Firma / Müşteri Adı" value="{{ session()->get('users')['authority'] !=="admin" ? $login_get['user_name'] : '' }}" required/>
                         </div>
                         <div class="form-group">
                             <label>Telefon Numarası</label>
-                            <input value="5466458003" type="number" name="customer_phone" class="form-control" {{ session()->get('users')['authority'] !=="admin" ? 'readonly' : 'required' }} placeholder="Telefon Numarası" value="{{ session()->get('users')['authority'] !=="admin" ? $login_get['user_phone'] : '' }}" required/>
+                            <input type="number" name="customer_phone" class="form-control" {{ session()->get('users')['authority'] !=="admin" ? 'readonly' : 'required' }} placeholder="Telefon Numarası" value="{{ session()->get('users')['authority'] !=="admin" ? $login_get['user_phone'] : '' }}" required/>
                         </div>
                         <div class="form-group">
                             <label>Email Adresi</label>
-                            <input value="o.ozdmr.40@gmail.com" type="text" name="customer_email" class="form-control" {{ session()->get('users')['authority'] !=="admin" ? 'readonly' : 'required' }} placeholder="Email Adresi" value="{{ session()->get('users')['authority'] !=="admin" ? $login_get['user_email'] : '' }}" required/>
+                            <input type="text" name="customer_email" class="form-control" {{ session()->get('users')['authority'] !=="admin" ? 'readonly' : 'required' }} placeholder="Email Adresi" value="{{ session()->get('users')['authority'] !=="admin" ? $login_get['user_email'] : '' }}" required/>
                         </div>
                         <div class="form-group kartsistemi_kapat">
                             <div>
