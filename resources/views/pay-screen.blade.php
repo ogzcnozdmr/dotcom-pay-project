@@ -68,7 +68,7 @@
                         </div>
                         <div class="form-group">
                             <label>Tutar</label>
-                            <input type="number" name="order_total" class="form-control" placeholder="Tutar" required/>
+                            <input type="number" step="any" name="order_total" class="form-control" placeholder="Tutar" required/>
                         </div>
                         <div class="form-group hide">
                             <label>Taksit</label>

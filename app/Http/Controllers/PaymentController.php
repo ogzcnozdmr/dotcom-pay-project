@@ -146,12 +146,17 @@ class PaymentController extends Controller
                     $index1 = $index2 + 1;
                 }
 
-                if ($this->selectedBank === "is") {
+                if ($this->selectedBank === "is" || $this->selectedBank === "teb") {
                     $paramsval = $request->input('clientId').$paramsval;//clientId != clientid
                 }
 
                 $hashval = $paramsval.$this->bankDetail['storekey'];
                 $hash = base64_encode(pack('H*',sha1($hashval)));
+                //echo "hashval = $hashval <br>";
+                //echo "hashparamsval = $hashparamsval <br>";
+                //echo "hashparam = $hashparam <br>";
+                //echo "hash = $hash <br>";
+                //die();
 
                 if ($paramsval != $hashparamsval || $hashparam != $hash) {
                     $this->paymentFinish([
