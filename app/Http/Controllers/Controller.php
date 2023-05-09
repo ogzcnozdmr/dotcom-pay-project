@@ -90,7 +90,7 @@ class Controller extends BaseController
              * Yetkilendirdiğimiz veritabanımızda yoksa
              */
             if (empty($authorized_pages_get)) {
-                __redirect('home.danger', '?error=illegalNotAuthorizedPages');
+                __redirect('home.danger', '?error=illegalNotAuthorizedPages: '.$pages_illeal);
             }
             $authorized_pages_id = $authorized_pages_get['authority_pages_id'];
             $authority = new Authority();
@@ -111,6 +111,9 @@ class Controller extends BaseController
              * Sayfa yetkisi yetki alanı dizimizde yoksa
              */
             if (!in_array($authorized_pages_id, $this->__global['authorization_array'])) {
+                /*
+                 * Homepage
+                 */
                 if ($authorized_pages_id === 2) {
                     __redirect('pay.screen');
                 } else {

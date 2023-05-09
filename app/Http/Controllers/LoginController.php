@@ -47,7 +47,7 @@ class LoginController extends Controller
                 ]);
                 session()->save();
                 if ($getUser['user_authority'] === 'seller') {
-                    $this->result['location'] = route('news.start');
+                    $this->result['location'] = route('pay.screen');
                 } else {
                     $this->result['location'] = route('home.start');
                 }

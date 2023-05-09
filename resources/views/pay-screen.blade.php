@@ -132,15 +132,15 @@
                         <p class="sub-title">Müşteri bilgilerinizi giriniz.</p>
                         <div class="form-group">
                             <label>Firma / Müşteri Adı</label>
-                            <input type="text" name="customer_name" class="form-control" {{ session()->get('users')['authority'] !=="admin" ? 'readonly' : 'required' }} placeholder="Firma / Müşteri Adı" value="{{ session()->get('users')['authority'] !=="admin" ? $login_get['user_name'] : '' }}" required/>
+                            <input type="text" name="customer_name" class="form-control" {{ session()->get('users')['authority'] !== 'admin' ? 'readonly' : 'required' }} placeholder="Firma / Müşteri Adı" value="{{ session()->get('users')['authority'] !=="admin" ? $user['user_name'] : '' }}" required/>
                         </div>
                         <div class="form-group">
                             <label>Telefon Numarası</label>
-                            <input type="number" name="customer_phone" class="form-control" {{ session()->get('users')['authority'] !=="admin" ? 'readonly' : 'required' }} placeholder="Telefon Numarası" value="{{ session()->get('users')['authority'] !=="admin" ? $login_get['user_phone'] : '' }}" required/>
+                            <input type="number" name="customer_phone" class="form-control" {{ session()->get('users')['authority'] !== 'admin' ? 'readonly' : 'required' }} placeholder="Telefon Numarası" value="{{ session()->get('users')['authority'] !=="admin" ? $user['user_phone'] : '' }}" required/>
                         </div>
                         <div class="form-group">
                             <label>Email Adresi</label>
-                            <input type="text" name="customer_email" class="form-control" {{ session()->get('users')['authority'] !=="admin" ? 'readonly' : 'required' }} placeholder="Email Adresi" value="{{ session()->get('users')['authority'] !=="admin" ? $login_get['user_email'] : '' }}" required/>
+                            <input type="text" name="customer_email" class="form-control" {{ session()->get('users')['authority'] !== 'admin' ? 'readonly' : 'required' }} placeholder="Email Adresi" value="{{ session()->get('users')['authority'] !=="admin" ? $user['user_email'] : '' }}" required/>
                         </div>
                         <div class="form-group kartsistemi_kapat">
                             <div>

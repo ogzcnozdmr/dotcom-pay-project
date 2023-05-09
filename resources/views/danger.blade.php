@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     @include('general.meta')
-    @include('dependencies.js')
+    @include('dependencies.css')
 </head>
 <body>
     <div class="error-bg"></div>

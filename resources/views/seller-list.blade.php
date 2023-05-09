@@ -18,8 +18,7 @@
             <div class="card m-b-30">
                 <div class="card-body table-responsive">
                     <h4 class="mt-0 header-title">Bayi Listesi</h4>
-                    <p class="sub-titleplugins">Sisteminizde kayıtlı bütün bayilerin listesini görebilirsiniz.
-                    </p>
+                    <p class="sub-titleplugins">Sisteminizde kayıtlı bütün bayilerin listesini görebilirsiniz.</p>
                     <table id="bayi-list-datatable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <tr>

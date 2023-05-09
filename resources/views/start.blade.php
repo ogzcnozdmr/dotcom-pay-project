@@ -35,7 +35,7 @@
                         <i class="mdi mdi-tag-text-outline bg-warning text-white"></i>
                     </div>
                     <div>
-                        <h5 class="font-16">Ödeme İsteği</h5>
+                        <h5 class="font-16">Ödeme İşlemi</h5>
                     </div>
                     <h3 class="mt-4">{{ $payment_request }}</h3>
                 </div>

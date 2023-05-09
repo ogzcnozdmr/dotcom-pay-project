@@ -92,7 +92,8 @@ class Pay extends BaseModel
     {
         $builder = DB::table('pay')
             ->where([
-                'pay_visible' => '1'
+                'pay_visible' => '1',
+                'pay_result' => 'success'
             ]);
         return builder_return_data($builder, 1, 'sum(order_total) as total,count(*) as success');
     }
@@ -104,7 +105,8 @@ class Pay extends BaseModel
     public static function __payment_request_count() : int
     {
         return self::where([
-                'pay_visible' => '1'
+                'pay_visible' => '1',
+                'pay_result' => 'success'
             ])
             ->count();
     }
