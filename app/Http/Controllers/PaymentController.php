@@ -273,6 +273,7 @@ class PaymentController extends Controller
                 $hash = base64_encode(pack('H*', sha1($hashstr)));
                 break;
             case '2':
+            case '3':
                 $MbrId= $this->selectedVirtualCard['virtual_pos_type'] === '2' ? '12' : '5';
                 $TxnType="Auth";
                 $Lang="TR";
@@ -749,10 +750,10 @@ class PaymentController extends Controller
 
     /**
      * Xml sonucunu parçalayıp diziye çevirir
-     * @param null|string $odemeSonucXML
+     * @param null|string|array $odemeSonucXML
      * @return array
      */
-    private function resultXML(null|string $odemeSonucXML) : array
+    private function resultXML(null|string|array $odemeSonucXML) : array
     {
         switch ($this->selectedVirtualCard['virtual_pos_type']) {
             case '1':

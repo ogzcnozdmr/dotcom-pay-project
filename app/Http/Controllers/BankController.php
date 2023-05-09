@@ -54,7 +54,8 @@ class BankController extends Controller
                 "password"      => $request->input('password'),
                 "client"     => $request->input('client'),
                 "storekey"     => $request->input('storekey'),
-                "storetype"  => $request->input('storetype')
+                "storetype"  => $request->input('storetype'),
+                "storetype3d"  => $request->input('storetype3d') ?? ''
             ]),
             "max_installment"        => $request->input('max_installment'),
             "min_installment_amount" => $request->input('min_installment_amount')

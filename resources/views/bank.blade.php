@@ -52,6 +52,14 @@
                             <label>Store Type</label>
                             <input type="text" name="storetype" value="{{ $bank_detail_api['storetype'] }}" class="form-control" readonly/>
                         </div>
+
+                        @if($bank_detail['virtual_pos_type'] == '3')
+                            <div class="form-group">
+                                <label>Store Type</label>
+                                <input type="text" name="storetype3d" value="{{ $bank_detail_api['storetype3d'] }}" class="form-control" readonly/>
+                            </div>
+                        @endif
+
                         <div class="form-group">
                             <label>Maximum Taksit</label>
                             <select id="max_installment" class="form-control">
