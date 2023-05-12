@@ -50,12 +50,12 @@ class BankController extends Controller
         $update = $bank->__update($request->input('id'), [
             "bank_visible" => $request->input('option') ? '1' : '0',
             "bank_json" =>__json_encode([
-                "name"          => $request->input('name'),
-                "password"      => $request->input('password'),
-                "client"     => $request->input('client'),
-                "storekey"     => $request->input('storekey'),
-                "storetype"  => $request->input('storetype'),
-                "storetype3d"  => $request->input('storetype3d') ?? ''
+                "name"        => $request->input('name'),
+                "password"    => $request->input('password'),
+                "client"      => $request->input('client'),
+                "storekey"    => $request->input('storekey'),
+                "storetype"   => $request->input('storetype'),
+                "storetype3d" => $request->input('storetype3d')
             ]),
             "max_installment"        => $request->input('max_installment'),
             "min_installment_amount" => $request->input('min_installment_amount')

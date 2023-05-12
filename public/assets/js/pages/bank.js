@@ -32,6 +32,7 @@ let PageJS = {
                 client : $tihis.find("input[name=client]").val(),
                 storekey : $tihis.find("input[name=storekey]").val(),
                 storetype : $tihis.find("input[name=storetype]").val(),
+                storetype3d : $tihis.find("input[name=storetype3d]").val(),
                 max_installment : $tihis.find("#max_installment option:selected").val(),
                 min_installment_amount : $tihis.find("input[name=min_installment_amount]").val()
             }, function(data) {
