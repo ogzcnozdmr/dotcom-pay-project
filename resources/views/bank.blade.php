@@ -55,7 +55,7 @@
 
                         @if($bank_detail['virtual_pos_type'] == '3')
                             <div class="form-group">
-                                <label>Store Type</label>
+                                <label>3D Store Type</label>
                                 <input type="text" name="storetype3d" value="{{ $bank_detail_api['storetype3d'] }}" class="form-control" readonly/>
                             </div>
                         @endif

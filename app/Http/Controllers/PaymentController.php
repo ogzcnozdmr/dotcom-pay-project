@@ -465,7 +465,6 @@ class PaymentController extends Controller
             case '3':
             default:
                 $odemeSonuc = [];
-                preprint($this->paymentSend($sanalPos));
                 foreach(explode(";;", $this->paymentSend($sanalPos)) as $sonuc) {
                     list($key, $value)= explode("=", $sonuc);
                     $odemeSonuc[$key] = $value;
