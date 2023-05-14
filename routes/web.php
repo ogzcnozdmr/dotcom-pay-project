@@ -89,6 +89,7 @@ Route::middleware('app.logout')->group(function () {
     Route::name('profile.')->group(function () {
         Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'start'])->name('start');
         Route::get('/profile/pay', [\App\Http\Controllers\ProfileController::class, 'pay'])->name('pay');
+        Route::post('/profile/update', [\App\Http\Controllers\ProfileController::class, 'update'])->name('update');
     });
     /**
      * News

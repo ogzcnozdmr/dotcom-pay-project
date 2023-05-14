@@ -12,6 +12,9 @@ let PageJS = {
 
         const urlParams = new URLSearchParams(window.location.search);
 
+        /**
+         * Ödeme işlemi sonucu
+         */
         if (urlParams.get('result') !== null && urlParams.get('message') !== null) {
 
             Swal.fire(
@@ -23,12 +26,10 @@ let PageJS = {
         }
 
         let min_taksit_miktar = $('#min_installment_count').data('value')
-        console.log("min = "+min_taksit_miktar);
 
-        $('#sanal-satis-bilgileri input[name=order_total]').on("input",function() {
+        $('input[name=order_total]').on('input', function() {
             let val = parseInt($(this).val());
-            console.log("val = "+val+" min taksit = "+min_taksit_miktar);
-            if (val>=min_taksit_miktar) {
+            if (val >= min_taksit_miktar) {
                 $('select[name=order_installment]').parent().show();
             } else {
                 $('select[name=order_installment]').parent().hide();
@@ -37,7 +38,7 @@ let PageJS = {
 
         $('select[name=bank]').change(function() {
             let val = $(this).find("option:selected").val();
-            $.post("/installment/get", {bank:val}, function(data) {
+            $.post('/installment/get', {bank:val}, function(data) {
                 if (data.result) {
                     min_taksit_miktar = parseFloat(data.min);//yeni minimum taksit miktarını getiriyoruz
                     //yeni gelen değer taksit değerinden küçükse, taksiti gizliyoruz
@@ -47,17 +48,14 @@ let PageJS = {
                         $('select[name=order_installment]').parent().show();
                     $('select[name=order_installment]').empty();
                     for (var i = 1;i <= data.max;i++) {
-                        var text = i == 1 ? 'Tek Çekim' : i;
                         $('select[name=order_installment]').append(`
-                        <option value="${i}">${text}</option>
-                    `)
+                            <option value="${i}">${i === 1 ? 'Tek Çekim' : i}</option>
+                        `)
                     }
                 }
             }, 'json');
         });
-
     }
-
 };
 
 /*

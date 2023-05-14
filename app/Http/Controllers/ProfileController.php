@@ -28,10 +28,12 @@ class ProfileController extends Controller
     public function update(Request $request) {
         $profile = new User();
         $result = $profile->__update(session()->get('id'), [
-            "v1" => $request->input('name'),
-            "v2" => $request->input('email'),
-            "v3" => $request->input('phone')
+            "user_name" => $request->input('name'),
+            "user_email" => $request->input('email'),
+            "user_phone" => $request->input('phone')
         ]);
-        echo $result ? '1' : '0';
+        $this->result['result'] = $result;
+        $this->result['message'] = $result ? 'Güncelleme Başarılı' : 'Güncelleme Başarısız';
+        echo __json_encode($this->result);
     }
 }
