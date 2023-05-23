@@ -264,6 +264,7 @@ class PaymentController extends Controller
             'bank' => $this->selectedBank,
             'installment' => $this->cardInformation['installment']
         ]);
+        //echo $okUrl."  -  ".$failUrl."  -  ";
         $currency = "949";
 
         // 3D modelinde hash hesaplamasında işlem tipi ve taksit kullanılmıyor

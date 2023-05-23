@@ -35,7 +35,7 @@
                             <tbody>
                                 @foreach($bank as $value)
                                     <tr>
-                                        <td><img width="60" src="{{ asset($value['bank_photo']) }}"></th>
+                                        <td><img width="100" src="{{ asset($value['bank_photo']) }}"></th>
                                         <td>{{ $value['max_installment'] }}</th>
                                         <td style="font-weight:800;">{{ $value['plus_installment'] == 0 ? '-' : '+' }}{{ $value['plus_installment'] }}</th>
                                     </tr>
