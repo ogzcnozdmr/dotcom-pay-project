@@ -264,7 +264,6 @@ class PaymentController extends Controller
             'bank' => $this->selectedBank,
             'installment' => $this->cardInformation['installment']
         ]);
-        //echo $okUrl."  -  ".$failUrl."  -  ";
         $currency = "949";
 
         // 3D modelinde hash hesaplamasında işlem tipi ve taksit kullanılmıyor
@@ -739,8 +738,6 @@ class PaymentController extends Controller
                 break;
             case '4':
                 curl_setopt($ch, CURLOPT_POST, TRUE);
-                echo "gelo - ";
-                echo $request;
                 curl_setopt($ch, CURLOPT_POSTFIELDS, "prmstr=" . $request);
                 break;
         }
