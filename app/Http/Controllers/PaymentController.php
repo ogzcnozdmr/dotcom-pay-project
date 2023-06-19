@@ -146,7 +146,7 @@ class PaymentController extends Controller
                     $index1 = $index2 + 1;
                 }
 
-                if ($this->selectedBank === "is" || $this->selectedBank === "teb") {
+                if (!str_starts_with($paramsval, $request->input('clientId'))) {
                     $paramsval = $request->input('clientId').$paramsval;//clientId != clientid
                 }
 
@@ -390,7 +390,7 @@ class PaymentController extends Controller
                     $this->orderTotal .= '.00';
                 }
                 $curldata = [
-                    'MerchantID' => $this->bankDetail['name'],
+                    'MerchantId' => $this->bankDetail['name'],
                     'MerchantPassword' => $this->bankDetail['password'],
                     'VerifyEnrollmentRequestId' => $this->orderCode,
                     'Pan'=> $this->cardInformation['number'],
@@ -405,9 +405,10 @@ class PaymentController extends Controller
                 if (intval($this->cardInformation['installment']) > 1) {
                     $curldata['InstallmentCount'] = $this->cardInformation['installment'];
                 }
+                preprint($curldata, false);
                 //TODO:CURL YERİNE REQUEST KULLAN
                 $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL,$this->selectedVirtualCard['api_security_url']);
+                curl_setopt($ch, CURLOPT_URL, $this->selectedVirtualCard['api_security_url']);
                 curl_setopt($ch, CURLOPT_POST, TRUE);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($curldata));
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -739,6 +740,8 @@ class PaymentController extends Controller
                 break;
             case '4':
                 curl_setopt($ch, CURLOPT_POST, TRUE);
+                echo "gelo - ";
+                echo $request;
                 curl_setopt($ch, CURLOPT_POSTFIELDS, "prmstr=" . $request);
                 break;
         }
