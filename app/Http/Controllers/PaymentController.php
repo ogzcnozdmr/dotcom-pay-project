@@ -405,7 +405,6 @@ class PaymentController extends Controller
                 if (intval($this->cardInformation['installment']) > 1) {
                     $curldata['InstallmentCount'] = $this->cardInformation['installment'];
                 }
-                preprint($curldata, false);
                 //TODO:CURL YERİNE REQUEST KULLAN
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL, $this->selectedVirtualCard['api_security_url']);
