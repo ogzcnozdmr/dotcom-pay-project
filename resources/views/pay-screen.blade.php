@@ -144,7 +144,7 @@
                         </div>
                         <div class="form-group kartsistemi_kapat">
                             <div>
-                                <button type="button" class="btn btn-primary waves-effect waves-light odeme-yap">
+                                <button class="btn btn-primary waves-effect waves-light odeme-yap">
                                     Ödeme Yap
                                 </button>
                             </div>
