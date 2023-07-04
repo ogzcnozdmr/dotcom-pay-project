@@ -11,7 +11,6 @@ let PageJS = {
     initUI: function () {
 
         $.post('/pay/postList', {}, function(data) {
-            console.log(data);
             table = $('#datatable-buttons').DataTable({
                 responsive: true,
                 lengthChange: false,
