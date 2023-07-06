@@ -79,6 +79,7 @@ Route::middleware('app.logout')->group(function () {
     Route::name('pay.')->group(function () {
         Route::get('/pay/list', [\App\Http\Controllers\PayController::class, 'list'])->name('list');
         Route::post('/pay/postList', [\App\Http\Controllers\PayController::class, 'postList'])->name('postList');
+        Route::post('/pay/postDetail', [\App\Http\Controllers\PayController::class, 'postDetail'])->name('postDetail');
         Route::get('/pay/screen/{orderCode?}', [\App\Http\Controllers\PayController::class, 'screen'])->name('screen');
         Route::get('/pay/dashboard', [\App\Http\Controllers\PayController::class, 'dashboard'])->name('dashboard');
         Route::post('/pay/request', [\App\Http\Controllers\PaymentController::class, 'start'])->name('request');

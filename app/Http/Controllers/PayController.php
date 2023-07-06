@@ -6,6 +6,7 @@ use App\Models\Bank;
 use App\Models\Installment;
 use App\Models\Pay;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class PayController extends Controller
@@ -59,10 +60,35 @@ class PayController extends Controller
                 $taksit,
                 $get['bank_name'],
                 date_translate($get['pay_date'],2),
-                __pay_result_titles($get['pay_result'])
+                __pay_result_titles($get['pay_result']),
+                '<button data-id="'.$get['pay_id'].'"class="btn btn-info btn-xs pay-detail" >Ödeme Detay</button>'
             ];
         }
         echo __json_encode($result);
+    }
+    /**
+     * Ödeme Detayını getirir
+     * @return void
+     */
+    public function postDetail(Request $request) : void
+    {
+        $data = [];
+        $pay = new Pay();
+        $detail = $pay->payDetail($request->input('id'));
+        if (!empty($detail)) {
+            $data = array_merge($data, [
+                'order_number' => $detail['order_number'],
+                'pay_date' => date_translate($detail['pay_date'], 2),
+                'bank_name' => $detail['bank_name'],
+                'pay_card_owner' => $detail['pay_card_owner'],
+                'seller_name' => $detail['seller_name'],
+                'user_email' => $detail['user_email'],
+                'user_phone' => $detail['user_phone'],
+                'pay_result' => __pay_result_titles($detail['pay_result']),
+                'pay_message' => empty($detail['pay_message']) && $detail['pay_result'] === 'success' ? 'Ödeme başarıyla tamamlandı' : $detail['pay_message']
+            ]);
+        }
+        echo __json_encode($data);
     }
     /**
      * İstatistikleri getirir

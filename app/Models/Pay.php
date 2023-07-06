@@ -52,6 +52,23 @@ class Pay extends BaseModel
     }
 
     /**
+     * Ödeme Detayını getirir
+     * @param $id
+     * @return array
+     */
+    public static function payDetail($id) : array
+    {
+        $where = [
+            'pay_visible' => '1',
+            'pay_id'      => $id
+        ];
+        $builder = DB::table('pay')
+            ->join('bank', 'bank.bank_variable', '=', 'pay.pay_bank')
+            ->where($where);
+        return builder_return_data($builder, $id, '*');
+    }
+
+    /**
      * Başarılı ödemeleri getirir
      * @param $date1
      * @param $date2
