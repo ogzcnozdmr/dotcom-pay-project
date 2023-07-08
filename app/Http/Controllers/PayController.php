@@ -50,7 +50,7 @@ class PayController extends Controller
         $lists = $pay->payList(session()->get('users')['authority'], session()->get('users')['id']);
         foreach ($lists as $get) {
             $taksit = $get['order_installment'] !== 0 ? $get['order_installment'] : 'PEŞİN';
-            $link = $get['user_id'] == '0' ? $get['seller_name'] : '<a href="'.route('seller.pay', ['id' => $get['user_id']]).'">'.$get['seller_name'].'<a/>';
+            $link = $get['is_user'] == '0' ? $get['seller_name'] : '<a href="'.route('seller.pay', ['id' => $get['user_id']]).'">'.$get['seller_name'].'<a/>';
 
             $result[] = [
                 (++$row),

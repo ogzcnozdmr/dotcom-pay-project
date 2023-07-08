@@ -42,13 +42,14 @@ class Pay extends BaseModel
             'pay_visible' => '1'
         ];
         if ($authority !== 'admin') {
-            $where['user_id'] = $id;
+            $where['pay.user_id'] = $id;
         }
         $builder = DB::table('pay')
             ->join('bank', 'bank.bank_variable', '=', 'pay.pay_bank')
+            ->leftJoin('user', 'user.user_id', '=', 'pay.user_id')
             ->where($where)
             ->orderBy('pay_id', 'desc');
-        return builder_return_data($builder, null, 'pay_id,user_id,seller_name,pay_card_owner,order_total,pay_date,order_installment,pay_result,bank_name');
+        return builder_return_data($builder, null, 'pay_id,pay.user_id,seller_name,pay_card_owner,order_total,pay_date,order_installment,pay_result,bank_name,(CASE WHEN user.user_id = pay.user_id THEN 1 ELSE 0 END) AS is_user');
     }
 
     /**

@@ -114,9 +114,6 @@ let PageJS = {
             }, 'JSON');
         });
 
-
-
-
         $.post('/pay/postList', {}, function(data) {
             table = $('#datatable-buttons').DataTable({
                 responsive: true,
